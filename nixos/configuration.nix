@@ -121,7 +121,7 @@
   home-manager = {
     extraSpecialArgs = { inherit inputs outputs; };
     users = {
-      ca4mi = import ../home-manager/home.nix;
+      ca4mi = import ../users/ca4mi/home.nix;
     };
   };
 
