@@ -55,6 +55,7 @@
     mullvad-vpn
     mullvad-browser
     discord
+    libreoffice
   ];
 
   programs.home-manager.enable = true;
