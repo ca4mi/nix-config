@@ -21,7 +21,14 @@
     nixosConfigurations = {
       asahina = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
-        modules = [./nixos/configuration.nix];
+        modules = [
+          ./nixos/configuration.nix
+          {
+            nixpkgs.overlays = [
+              (import ./pkgs/keyboard-layouts)
+            ];
+          }
+        ];
       };
     };
   };

@@ -42,7 +42,13 @@
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
-    variant = "";
+    extraLayouts = {
+      mongolianqwerty = {
+        description = "Mongolian QWERTY";
+        languages = [ "mn" ];
+        symbolsFile = "${pkgs.dusal-bicheech-xkb}/share/X11/xkb/symbols/mn";
+      };
+    };
   };
 
   # Nvidia
