@@ -9,6 +9,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       inputs.home-manager.nixosModules.home-manager
+      ./secrets
     ];
 
   # Bootloader.
@@ -77,7 +78,7 @@
   };
   
   # Enable CUPS to print documents.
-  services.printing.enable = true;
+  # services.printing.enable = true;
 
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
@@ -98,17 +99,16 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  # Define a user account.
   users.users.ca4mi = {
     isNormalUser = true;
-    description = "ca4mi";
+    hashedPasswordFile = config.age.secrets.hashedUserPassword.path;
     extraGroups = [ "networkmanager" "wheel" ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB6eAo8+0E5FTs0RgeZcBujZvElu1OK7kCI/EBZ0s2xi mail@ca4mi.net"
     ];
     packages = with pkgs; [
       kdePackages.kate
-    #  thunderbird
     ];
   };
 
@@ -126,9 +126,10 @@
 
   home-manager = {
     extraSpecialArgs = { inherit inputs outputs; };
-    users = {
-      ca4mi = import ../users/ca4mi/home.nix;
-    };
+    users.ca4mi.imports = [
+      inputs.agenix.homeManagerModules.default
+      ../users/ca4mi/home.nix
+    ];
   };
 
   nix = {

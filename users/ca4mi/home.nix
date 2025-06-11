@@ -45,6 +45,7 @@
     git-crypt
     btop
     syncthing
+    tmux
     kitty
     fastfetch
     anydesk
