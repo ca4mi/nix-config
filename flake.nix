@@ -1,21 +1,22 @@
 {
   inputs = {
-    # nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
 
-    # home manager
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # agenix
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # secret from private github repo
     secrets = {
       url = "git+ssh://git@github.com/ca4mi/secrets.git";
       flake = false;
@@ -28,13 +29,22 @@
     ...
   } @ inputs: let
     inherit (self) outputs;
+
+    supportedSystems = [
+      "x86_64-linux"
+    ];
+    forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
+
   in {
     # Available through 'nixos-rebuild --flake .#your-hostname'
+    # sudo nixos-rebuild switch --flake "git+file:.#asahina"
     nixosConfigurations = {
       asahina = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
         specialArgs = {inherit inputs outputs;};
         modules = [
-          ./nixos/configuration.nix
+          ./nixos/asahina/configuration.nix
+          ./nixos/_common
           inputs.agenix.nixosModules.default
           {
             nixpkgs.overlays = [
@@ -42,6 +52,29 @@
             ];
           }
         ];
+      };
+    };
+    # nixos-install --root "/mnt" --no-root-passwd --flake "git+file:///mnt/etc/nixos#nagato"
+    nixConfiguration = {
+      nagato = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {inherit inputs outputs;};
+        modules = [
+          ./nixos/nagato
+          inputs.disko.nixosModules.disko
+          inputs.agenix.nixosModules.default
+          .user/ca4mi
+          # todo - make it work
+          #inputs.home-manager.nixosModules.home-manager
+          #  {
+          #    home-manager.useGlobalPkgs = false;
+          #    home-manager.extraSpecialArgs = { inherit inputs outputs userConfig; };
+          #    home-manager.users.ca4mi.imports = [
+          #    inputs.agenix.homeManagerModules.default
+          #    ];
+          #    home-manager.backupFileExtension = "bak";
+          #};
+        ];  
       };
     };
   };
