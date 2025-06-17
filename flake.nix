@@ -55,20 +55,21 @@
       };
     };
     # nixos-install --root "/mnt" --no-root-passwd --flake "git+file:///mnt/etc/nixos#nagato"
-    nixConfiguration = {
+    nixosConfigurations = {
       nagato = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = {inherit inputs outputs;};
         modules = [
           ./nixos/nagato
+          ./nixos/_common
           inputs.disko.nixosModules.disko
           inputs.agenix.nixosModules.default
-          .user/ca4mi
+          #./users/ca4mi
           # todo - make it work
           #inputs.home-manager.nixosModules.home-manager
           #  {
           #    home-manager.useGlobalPkgs = false;
-          #    home-manager.extraSpecialArgs = { inherit inputs outputs userConfig; };
+          #    home-manager.extraSpecialArgs = { inherit inputs outputs; };
           #    home-manager.users.ca4mi.imports = [
           #    inputs.agenix.homeManagerModules.default
           #    ];

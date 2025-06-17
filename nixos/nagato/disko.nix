@@ -1,83 +1,141 @@
 {
   disko.devices = {
-    disk.main = {
-      device = "/dev/disk/by-id/ata-ST9160412AS_5VG56VWT";
-      type = "disk";
-      content = {
-        type = "gpt";
-        partitions = {
-          boot = {
-            size = "1M";
-            type = "EF02";
-          };
-
-          ESP = {
-            name = "ESP";
-            size = "512M";
-            type = "EF00";
-            content = {
-              type = "filesystem";
-              format = "vfat";
-              mountpoint = "/boot";
-              mountOptions = [ "umask=0077" ];
+    disk = {
+      main = {
+        type = "disk";
+        device = "/dev/disk/by-id/ata-ST9160412AS_5VG56VWT";
+        content = {
+          type = "gpt";
+          partitions = {
+            efi = {
+              size = "1G";
+              type = "EF00";
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                mountpoint = "/boot/esp";
+              };
             };
-          };
-
-          nix = {
-            size = "80G";
-            content = {
-              type = "filesystem";
-              format = "ext4";
-              mountpoint = "/nix";
-            };
-          };
-
-          home = {
-            size = "20G";
-            content = {
-              type = "filesystem";
-              format = "ext4";
-              mountpoint = "/home";
-            };
-          };
-
-          etc_nixos = {
-            size = "1G";
-            content = {
-              type = "filesystem";
-              format = "ext4";
-              mountpoint = "/etc/nixos";
-            };
-          };
-
-          persist = {
-            size = "5G";
-            content = {
-              type = "filesystem";
-              format = "ext4";
-              mountpoint = "/persist";
+            bpool = {
+              size = "4G";
+              content = {
+                type = "zfs";
+                pool = "bpool";
+              };
+                };
+              rpool = {
+                end = "-1M";
+                content = {
+                  type = "zfs";
+                  pool = "rpool";
+                };
+              };
+              bios = {
+                size = "100%";
+                type = "EF02";
+              };
             };
           };
         };
       };
-    };
+      zpool = {
+        bpool = {
+          type = "zpool";
+          options = {
+            ashift = "12";
+            autotrim = "on";
+            compatibility = "grub2";
+          };
+          rootFsOptions = {
+            acltype = "posixacl";
+            canmount = "off";
+            compression = "lz4";
+            devices = "off";
+            normalization = "formD";
+            relatime = "on";
+            xattr = "sa";
+            "com.sun:auto-snapshot" = "false";
+          };
+          mountpoint = "/boot";
+          datasets = {
+            nixos = {
+              type = "zfs_fs";
+              options.mountpoint = "none";
+            };
+            "nixos/root" = {
+              type = "zfs_fs";
+              options.mountpoint = "legacy";
+              mountpoint = "/boot";
+            };
+          };
+        };
 
-    nodev."/" = {
-      fsType = "tmpfs";
-      mountOptions = [
-        "size=2G"
-        "defaults"
-        "mode=755"
-      ];
-    };
+        rpool = {
+          type = "zpool";
+          options = {
+            ashift = "12";
+            autotrim = "on";
+          };
+          rootFsOptions = {
+            acltype = "posixacl";
+            canmount = "off";
+            compression = "zstd";
+            dnodesize = "auto";
+            normalization = "formD";
+            relatime = "on";
+            xattr = "sa";
+            "com.sun:auto-snapshot" = "false";
+          };
+          mountpoint = "/";
 
-    nodev."/tmp" = {
-      fsType = "tmpfs";
-      mountOptions = [
-        "size=2G"
-        "defaults"
-        "mode=1777"
-      ];
-    };
+          datasets = {
+            nixos = {
+              type = "zfs_fs";
+              options.mountpoint = "none";
+            };
+            "nixos/var" = {
+              type = "zfs_fs";
+              options.mountpoint = "none";
+            };
+            "nixos/empty" = {
+              type = "zfs_fs";
+              options.mountpoint = "legacy";
+              mountpoint = "/";
+              postCreateHook = "zfs snapshot rpool/nixos/empty@start";
+            };
+            "nixos/home" = {
+              type = "zfs_fs";
+              options.mountpoint = "legacy";
+              mountpoint = "/home";
+            };
+            "nixos/var/log" = {
+              type = "zfs_fs";
+              options.mountpoint = "legacy";
+              mountpoint = "/var/log";
+            };
+            "nixos/var/lib" = {
+              type = "zfs_fs";
+              options.mountpoint = "none";
+            };
+            "nixos/config" = {
+              type = "zfs_fs";
+              options.mountpoint = "legacy";
+              mountpoint = "/etc/nixos";
+            };
+            "nixos/persist" = {
+              type = "zfs_fs";
+              options.mountpoint = "legacy";
+              mountpoint = "/persist";
+            };
+            "nixos/nix" = {
+              type = "zfs_fs";
+              options.mountpoint = "legacy";
+              mountpoint = "/nix";
+            };
+          };
+        };
   };
+};
 }
+
+

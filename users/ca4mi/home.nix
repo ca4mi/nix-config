@@ -46,7 +46,6 @@
     vlc
     darktable
     obs-studio
-    obsidian
     mullvad-vpn
     mullvad-browser
     discord
