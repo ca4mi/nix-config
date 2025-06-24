@@ -36,6 +36,7 @@
     forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
 
   in {
+    # nix-env -f '<nixpkgs>' -iA git
     # Available through 'nixos-rebuild --flake .#your-hostname'
     # sudo nixos-rebuild switch --flake "git+file:.#asahina"
     nixosConfigurations = {
