@@ -3,7 +3,7 @@
     disk = {
       main = {
         type = "disk";
-        device = "/dev/disk/by-id/ata-ST9160412AS_5VG56VWT";
+        device = "/dev/disk/by-id/nvme-WDC_PC_SN530_SDBPMPZ-256G-1101_211031810416";
         content = {
           type = "gpt";
           partitions = {

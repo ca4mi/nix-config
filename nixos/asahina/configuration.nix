@@ -14,9 +14,26 @@
     ];
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  # boot.loader.systemd-boot.enable = true;
+  # boot.loader.efi.canTouchEfiVariables = true;
   boot.zfs.forceImportRoot = true;
+
+  zfs-root = {
+    boot = {
+      devNodes = "/dev/disk/by-id/";
+      bootDevices = [  "nvme-WDC_PC_SN530_SDBPMPZ-256G-1101_211031810416" ];
+      immutable = false;
+      availableKernelModules = [  "uhci_hcd" "ehci_pci" "ahci" "sd_mod" "sr_mod" ];
+      removableEfi = true;
+      kernelParams = [ 
+      "pcie_aspm=force"
+      "consoleblank=60"
+      ];
+      sshUnlock = {
+        enable = false;
+        authorizedKeys = [ ];
+      };
+    };
 
   networking.hostName = "asahina";
   networking.hostId = "8425e349"; 

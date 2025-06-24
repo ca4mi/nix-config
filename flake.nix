@@ -46,6 +46,7 @@
         modules = [
           ./nixos/asahina/configuration.nix
           ./nixos/_common
+          inputs.disko.nixosModules.disko
           inputs.agenix.nixosModules.default
           {
             nixpkgs.overlays = [
