@@ -9,13 +9,17 @@
     [
       ./hardware.nix
       inputs.home-manager.nixosModules.home-manager
+      ./disko.nix
+      ./filesystems.nix
     ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.zfs.forceImportRoot = true;
 
   networking.hostName = "asahina";
+  networking.hostId = "8425e349"; 
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
