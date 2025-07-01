@@ -1,29 +1,20 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ lib, inputs, outputs, config, pkgs, ... }:
-
+{
+  inputs,
+  lib,
+  outputs,
+  config,
+  pkgs,
+  ...
+}:
 {
   imports =
     [
       ./hardware.nix
-      inputs.home-manager.nixosModules.home-manager
-      ./disko.nix
-      ./filesystems.nix
     ];
 
   # Bootloader.
-  # boot.loader.systemd-boot.enable = true;
-  # boot.loader.efi.canTouchEfiVariables = true;
-
-  boot.loader.grub = {
-    enable = true;
-    efiSupport = true;
-    efiInstallAsRemovable = true;
-  };
-
-  boot.zfs.forceImportRoot = true;
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "asahina";
   networking.hostId = "8425e349"; 
@@ -35,6 +26,9 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
+
+  # Select internationalisation properties.
+  i18n.defaultLocale = "en_US.UTF-8";
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -126,14 +120,6 @@
   };
 
   programs.firefox.enable = true;
-
-  home-manager = {
-    extraSpecialArgs = { inherit inputs outputs; };
-    users.ca4mi.imports = [
-      inputs.agenix.homeManagerModules.default
-      ../../users/ca4mi/home.nix
-    ];
-  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

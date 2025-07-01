@@ -46,7 +46,6 @@
         modules = [
           ./nixos/asahina/configuration.nix
           ./nixos/_common
-          inputs.disko.nixosModules.disko
           inputs.agenix.nixosModules.default
           {
             nixpkgs.overlays = [
@@ -56,6 +55,19 @@
         ];
       };
     };
+
+    # Available through 'home-manager --flake .#your-username@your-hostname'
+    homeConfigurations = {
+      "ca4mi@asahina" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        extraSpecialArgs = {inherit inputs outputs;};
+        modules = [
+          inputs.agenix.homeManagerModules.default 
+          ./users/ca4mi/home.nix 
+        ];
+      };
+    };
+
     # nixos-install --root "/mnt" --no-root-passwd --flake "git+file:///mnt/etc/nixos#nagato"
     nixosConfigurations = {
       nagato = nixpkgs.lib.nixosSystem {

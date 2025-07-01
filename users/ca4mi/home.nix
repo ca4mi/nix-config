@@ -6,13 +6,13 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   imports = [
     ./git.nix
   ];
 
   nixpkgs = {
-    # You can add overlays here
     overlays = [
       # If you want to use overlays exported from other flakes:
       # neovim-nightly-overlay.overlays.default
@@ -24,10 +24,6 @@
       #   });
       # })
     ];
-    config = {
-      allowUnfree = true;
-      allowUnfreePredicate = _: true;
-    };
   };
 
   home = {
