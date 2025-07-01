@@ -1,5 +1,6 @@
 ### Git with ssh
 copy ssh keys
+
 ```sh
 mkdir -p ~/.ssh
 # copy private key to .ssh and perm
@@ -16,7 +17,8 @@ ssh -T git@github.com
 ```
 
 ### Enable flakes
-``sh`
+
+```sh
 mkdir -p ~/.config/nix
 echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
 # add git configs
@@ -26,6 +28,7 @@ git config --global user.email "you@example.com"
 git config --global user.name "Your Name"
 ```
 ### nix-configs
+
 ```sh
 git clone git@github.com:ca4mi/nix-config.git
 ```
