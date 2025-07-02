@@ -34,6 +34,12 @@
   };
 
   programs.git.enable = true;
+  programs.neovim = {
+    enable = true;
+    viAlias = true;
+    vimAlias = true;
+    defaultEditor = true;
+  };
 
   security = {
     doas.enable = lib.mkDefault false;
@@ -50,6 +56,7 @@
     iotop
     nmap
     jq
+    git
     inputs.agenix.packages."${system}".default
   ];
 

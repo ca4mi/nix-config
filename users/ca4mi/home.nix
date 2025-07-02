@@ -38,13 +38,10 @@
     tmux
     kitty
     fastfetch
-    anydesk
     vlc
     darktable
     obs-studio
-    mullvad-vpn
     mullvad-browser
-    discord
     libreoffice
   ];
 
