@@ -9,6 +9,7 @@
     ];
     secrets = {
       hashedUserPassword.file = "${inputs.secrets}/hashedUserPassword.age";
+      tailscaleAuthKey.file = "${inputs.secrets}/tailscaleAuthKey.age";
     };
   };
 }

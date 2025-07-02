@@ -8,6 +8,7 @@
 {
   imports = [
     ./secrets
+    ./tailscale
   ];
 
   time.timeZone = "Asia/Ulaanbaatar";
