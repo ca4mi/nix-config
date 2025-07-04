@@ -12,8 +12,11 @@
   ];
 
   time.timeZone = "Asia/Ulaanbaatar";
-
+ 
   users.users = {
+    ca4mi = {
+      hashedPasswordFile = config.age.secrets.hashedUserPassword.path;
+    };
     root = {
       initialHashedPassword = config.age.secrets.hashedUserPassword.path;
     };
@@ -57,7 +60,6 @@
     iotop
     nmap
     jq
-    git
     inputs.agenix.packages."${system}".default
   ];
 
@@ -75,6 +77,7 @@
         "flakes"
       ];
     };
+
     gc = {
       automatic = true;
       options = "--delete-older-than 15d";

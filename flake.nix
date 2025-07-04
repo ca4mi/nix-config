@@ -79,17 +79,6 @@
           ./nixos/_common
           inputs.disko.nixosModules.disko
           inputs.agenix.nixosModules.default
-          #./users/ca4mi
-          # todo - make it work
-          #inputs.home-manager.nixosModules.home-manager
-          #  {
-          #    home-manager.useGlobalPkgs = false;
-          #    home-manager.extraSpecialArgs = { inherit inputs outputs; };
-          #    home-manager.users.ca4mi.imports = [
-          #    inputs.agenix.homeManagerModules.default
-          #    ];
-          #    home-manager.backupFileExtension = "bak";
-          #};
         ];  
       };
     };

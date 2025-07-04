@@ -106,11 +106,9 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  # Define a user account.
   users.users.ca4mi = {
     isNormalUser = true;
-    hashedPasswordFile = config.age.secrets.hashedUserPassword.path;
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "users" ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB6eAo8+0E5FTs0RgeZcBujZvElu1OK7kCI/EBZ0s2xi mail@ca4mi.net"
     ];
