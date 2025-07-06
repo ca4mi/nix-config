@@ -79,6 +79,7 @@
           ./nixos/_common
           inputs.disko.nixosModules.disko
           inputs.agenix.nixosModules.default
+	  ./modules/odoo
         ];  
       };
     };
