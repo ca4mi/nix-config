@@ -38,7 +38,6 @@
     tmux
     kitty
     fastfetch
-    vlc
     darktable
     obs-studio
     mullvad-browser

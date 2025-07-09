@@ -58,6 +58,7 @@
     };
 
     # Available through 'home-manager --flake .#your-username@your-hostname'
+    # home-manager switch --flake "git+file:.#ca4mi@asahina"
     homeConfigurations = {
       "ca4mi@asahina" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;

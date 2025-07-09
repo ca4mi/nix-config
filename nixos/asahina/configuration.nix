@@ -114,6 +114,8 @@
     ];
     packages = with pkgs; [
       kdePackages.kate
+      xfsprogs
+      freerdp
     ];
   };
 
