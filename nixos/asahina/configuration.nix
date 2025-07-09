@@ -116,6 +116,8 @@
       kdePackages.kate
       xfsprogs
       freerdp
+      podman
+      podman-compose
     ];
   };
 
@@ -132,6 +134,16 @@
   # bluetooth
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
+
+  # podman
+  virtualisation.containers.enable = true;
+  virtualisation = {
+    podman = {
+      enable = true;
+      dockerCompat = true;
+      defaultNetwork.settings.dns_enabled = true;
+    };
+  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
