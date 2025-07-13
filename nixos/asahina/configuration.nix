@@ -118,6 +118,9 @@
       freerdp
       podman
       podman-compose
+      burpsuite
+      virtualbox
+      davinci-resolve
     ];
   };
 
