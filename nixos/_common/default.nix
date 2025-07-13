@@ -38,6 +38,7 @@
   };
 
   programs.git.enable = true;
+
   programs.neovim = {
     enable = true;
     viAlias = true;
@@ -61,7 +62,18 @@
     nmap
     jq
     inputs.agenix.packages."${system}".default
+    btop
+    podman
+    podman-compose
   ];
+
+  programs.btop = {
+    enable = true;
+    settings = {
+      color_theme = "tokyo-night";
+      graph_symbol = "block";
+    };
+  };
 
   nixpkgs = {
     config = {

@@ -1,6 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     disko = {
       url = "github:nix-community/disko";
@@ -53,7 +54,6 @@
           ./nixos/asahina/configuration.nix
           ./nixos/_common
           inputs.agenix.nixosModules.default
-	  inputs.envycontrol.nixosModules.default
           {
             nixpkgs.overlays = [
               (import ./pkgs/keyboard-layouts)

@@ -33,12 +33,8 @@
 
   home.packages = with pkgs; [
     git-crypt
-    btop
     syncthing
-    tmux
     kitty
-    fastfetch
-    darktable
     obs-studio
     mullvad-browser
     libreoffice

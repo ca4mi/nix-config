@@ -79,7 +79,6 @@
   # prime 
   hardware.nvidia.prime = {
     sync.enable = true;
-
     intelBusId = "PCI:0:2:0";
     nvidiaBusId = "PCI:1:0:0";
   };
@@ -106,6 +105,10 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
+  environment.systemPackages = with pkgs; [
+    inputs.envycontrol.packages."${system}".default
+  ];
+
   users.users.ca4mi = {
     isNormalUser = true;
     extraGroups = [ "networkmanager" "wheel" "users" ];
@@ -114,13 +117,25 @@
     ];
     packages = with pkgs; [
       kdePackages.kate
+      kdePackages.kalk
+      kdePackages.dragon
+      kdePackages.kdenlive
       xfsprogs
       freerdp
-      podman
-      podman-compose
       burpsuite
-      virtualbox
+      anydesk
+      obsidian
+      discord
+      mediawriter
+      signal-desktop
       davinci-resolve
+      wineWowPackages.staging
+      bottles
+      lutris
+      vlc
+      totem
+      darktable
+      obs-studio
     ];
   };
 
