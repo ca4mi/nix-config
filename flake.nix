@@ -21,6 +21,11 @@
       url = "git+ssh://git@github.com/ca4mi/secrets.git";
       flake = false;
     };
+
+    envycontrol = {
+      url = "github:bayasdev/envycontrol";
+      inputs.nixpkgs.follows = "nixpkgs";
+    }; 
   };
 
   outputs = {
@@ -48,6 +53,7 @@
           ./nixos/asahina/configuration.nix
           ./nixos/_common
           inputs.agenix.nixosModules.default
+	  inputs.envycontrol.nixosModules.default
           {
             nixpkgs.overlays = [
               (import ./pkgs/keyboard-layouts)
