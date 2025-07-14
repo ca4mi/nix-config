@@ -9,6 +9,17 @@
     ../secrets
   ];
 
+  services.postgresql = {
+    enable = true;
+    ensureRoles = [
+      {
+        name = "odoo";
+        createDatabase = true;
+        passwordFile = config.age.secrets.db_password.path;
+      }
+    ];
+  };
+
   services.odoo = {
     enable = true;
     settings = {
