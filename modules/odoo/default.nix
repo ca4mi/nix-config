@@ -11,11 +11,14 @@
 
   services.postgresql = {
     enable = true;
-    ensureRoles = [
+    ensureUsers = [
       {
         name = "odoo";
-        createDatabase = true;
-        passwordFile = config.age.secrets.db_password.path;
+        ensureClauses = {
+          createrole = true;
+          createdb = true;
+          login = true;
+        };
       }
     ];
   };
@@ -24,9 +27,9 @@
     enable = true;
     settings = {
       options = {
-        admin_passwd = builtins.readFile config.age.secrets.admin_passwd.path;
-	db_user = "odoo";
-	db_passwordFile = config.age.secrets.db_password.path;
+        admin_passwdFile = config.age.secrets.admin_passwd.path;
+        db_user = "odoo";
+        db_passwordFile = config.age.secrets.db_password.path;
       };
     };
     addons = [ ];
