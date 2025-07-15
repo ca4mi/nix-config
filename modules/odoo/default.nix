@@ -6,7 +6,6 @@
 }:
 {
   imports = [
-    ../secrets
   ];
 
   services.postgresql = {
@@ -25,15 +24,7 @@
 
   services.odoo = {
     enable = true;
-    settings = {
-      options = {
-        admin_passwdFile = config.age.secrets.admin_passwd.path;
-        db_user = "odoo";
-        db_passwordFile = config.age.secrets.db_password.path;
-      };
-    };
     addons = [ ];
-    autoInit = true;
     autoInitExtraFlags = [ "--without-demo=all" ];
   };
 
@@ -44,5 +35,4 @@
     databases = [ "odoo" ];
     compression = "none";
   };
-  
 }
