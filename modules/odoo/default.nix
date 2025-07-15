@@ -25,6 +25,12 @@
   services.odoo = {
     enable = true;
     addons = [ ];
+    settings = {
+      options = {
+        admin_passwd = "$pbkdf2-sha512$100000$J9JiKWoaqAOk90T9m0xfWFqlFAbDBu7CfLYdveB1Nhg=$+cvbuGovwlFZyPJ1Fa32FnPZJbRf8Tl7R7zGCekbd7uCD2r9zAmaNt+x0Hhuwrv6f0ktJZSwDwreH57QEUhplw==";
+        db_name = "odoo-18";
+      };
+    };
     autoInitExtraFlags = [ "--without-demo=all" ];
   };
 
@@ -32,7 +38,7 @@
   # cd /var/backup/postgresql/
   services.postgresqlBackup = {
     enable = true;
-    databases = [ "odoo" ];
+    databases = [ "odoo-18" ];
     compression = "none";
   };
 }
