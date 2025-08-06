@@ -22,11 +22,6 @@
       url = "git+ssh://git@github.com/ca4mi/secrets.git";
       flake = false;
     };
-
-    envycontrol = {
-      url = "github:bayasdev/envycontrol";
-      inputs.nixpkgs.follows = "nixpkgs";
-    }; 
   };
 
   outputs = {

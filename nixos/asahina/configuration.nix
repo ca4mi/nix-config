@@ -63,22 +63,25 @@
   # https://nixos.wiki/wiki/Nvidia
   hardware.graphics = {
     enable = true;
+    enable32Bit = true;
+    extraPackages = with pkgs; [
+      rocmPackages.clr
+    ];
   };
 
-  services.xserver.videoDrivers = ["nvidia"];
 
   hardware.nvidia = {
     modesetting.enable = true;
     powerManagement.enable = true;
     powerManagement.finegrained = false;
-    open = true;
+    open = false;
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.production;
   };
 
   # prime 
   hardware.nvidia.prime = {
-    sync.enable = true;
+    offload.enable = true;
     intelBusId = "PCI:0:2:0";
     nvidiaBusId = "PCI:1:0:0";
   };
@@ -106,9 +109,13 @@
   # services.xserver.libinput.enable = true;
 
   environment.systemPackages = with pkgs; [
-    inputs.envycontrol.packages."${system}".default
+    cudatoolkit
+    nvtopPackages.nvidia
   ];
 
+  hardware.nvidia-container-toolkit.enable = true;
+  services.xserver.videoDrivers = ["nvidia"];
+  
   users.users.ca4mi = {
     isNormalUser = true;
     extraGroups = [ "networkmanager" "wheel" "users" ];

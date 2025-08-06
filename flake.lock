@@ -65,26 +65,6 @@
         "type": "github"
       }
     },
-    "envycontrol": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1751926261,
-        "narHash": "sha256-CpsATQCvjWdZlNZ0C+soyIVvmXun/XEuiUuGczwuOF4=",
-        "owner": "bayasdev",
-        "repo": "envycontrol",
-        "rev": "85bf0a73eb269f1dc40d753cc6f78eadf70df7c2",
-        "type": "github"
-      },
-      "original": {
-        "owner": "bayasdev",
-        "repo": "envycontrol",
-        "type": "github"
-      }
-    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -163,7 +143,6 @@
       "inputs": {
         "agenix": "agenix",
         "disko": "disko",
-        "envycontrol": "envycontrol",
         "home-manager": "home-manager_2",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",

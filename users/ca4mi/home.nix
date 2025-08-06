@@ -33,7 +33,6 @@
 
   home.packages = with pkgs; [
     git-crypt
-    syncthing
     kitty
     obs-studio
     mullvad-browser
