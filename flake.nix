@@ -18,6 +18,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    copyparty = {
+      url = "github:9001/copyparty";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     secrets = {
       url = "git+ssh://git@github.com/ca4mi/secrets.git";
       flake = false;
@@ -49,9 +54,12 @@
           ./nixos/asahina/configuration.nix
           ./nixos/_common
           inputs.agenix.nixosModules.default
+	  inputs.copyparty.nixosModules.default
+	  ./modules/copyparty
           {
             nixpkgs.overlays = [
               (import ./pkgs/keyboard-layouts)
+	      inputs.copyparty.overlays.default
             ];
           }
         ];
