@@ -14,15 +14,6 @@
 
   nixpkgs = {
     overlays = [
-      # If you want to use overlays exported from other flakes:
-      # neovim-nightly-overlay.overlays.default
-
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
     ];
   };
 
@@ -87,7 +78,7 @@
         window_padding_width = 0;
         window_margin_width = 0;
         adjust_line_height = "120%";
-        font_size = "16.0";
+        font_size = "12.0";
         shell = "/run/current-system/sw/bin/tmux";
       };
     };
