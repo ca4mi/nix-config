@@ -29,6 +29,7 @@
     mullvad-browser
     libreoffice
     tmux
+    gphoto2
   ];
 
   programs = {

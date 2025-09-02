@@ -108,6 +108,9 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
+  # for MTP/PTP devices
+  services.gvfs.enable = true;
+
   environment.systemPackages = with pkgs; [
     cudatoolkit
     nvtopPackages.nvidia
@@ -116,7 +119,7 @@
 
   hardware.nvidia-container-toolkit.enable = true;
   services.xserver.videoDrivers = ["nvidia"];
-  
+
   users.users.ca4mi = {
     isNormalUser = true;
     extraGroups = [ "networkmanager" "wheel" "users" ];
