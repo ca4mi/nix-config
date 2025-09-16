@@ -64,6 +64,7 @@
     inputs.agenix.packages."${system}".default
     podman
     podman-compose
+    ffmpeg
   ];
 
   nixpkgs = {
