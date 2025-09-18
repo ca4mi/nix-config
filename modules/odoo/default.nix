@@ -2,8 +2,18 @@
   inputs,
   config,
   lib,
+  pkgs,
   ...
 }:
+
+let
+  account-reconcile = pkgs.fetchFromGitHub {
+    owner = "OCA";
+    repo = "account-reconcile";
+    rev = "88539397011d58d9837cb2aec7142dc285d14394";
+    sha256 = "sha256-X4SzbZj3LxGlB94X3RP88fo3lwuGVxsX++gK89f0cPI="; 
+  };
+in
 {
   imports = [
   ];
@@ -24,7 +34,9 @@
 
   services.odoo = {
     enable = true;
-    addons = [ ];
+    addons = [
+      account-reconcile
+    ];
     settings = {
       options = {
         admin_passwd = "$pbkdf2-sha512$100000$J9JiKWoaqAOk90T9m0xfWFqlFAbDBu7CfLYdveB1Nhg=$+cvbuGovwlFZyPJ1Fa32FnPZJbRf8Tl7R7zGCekbd7uCD2r9zAmaNt+x0Hhuwrv6f0ktJZSwDwreH57QEUhplw==";
