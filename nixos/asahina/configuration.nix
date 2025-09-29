@@ -147,6 +147,8 @@
       totem
       darktable
       obs-studio
+      mediainfo
+      handbrake
     ];
   };
 

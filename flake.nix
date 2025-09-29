@@ -54,8 +54,8 @@
           ./nixos/asahina/configuration.nix
           ./nixos/_common
           inputs.agenix.nixosModules.default
-	  inputs.copyparty.nixosModules.default
-	  ./modules/copyparty
+          inputs.copyparty.nixosModules.default
+          ./modules/copyparty
           {
             nixpkgs.overlays = [
               (import ./pkgs/keyboard-layouts)
@@ -89,7 +89,7 @@
           ./nixos/_common
           inputs.disko.nixosModules.disko
           inputs.agenix.nixosModules.default
-	  ./modules/odoo
+          ./modules/odoo
         ];  
       };
     };
