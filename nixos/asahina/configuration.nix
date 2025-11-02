@@ -114,7 +114,6 @@
   environment.systemPackages = with pkgs; [
     cudatoolkit
     nvtopPackages.nvidia
-    copyparty
   ];
 
   hardware.nvidia-container-toolkit.enable = true;
@@ -178,8 +177,6 @@
 
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [
-    3210
-    3211
   ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
