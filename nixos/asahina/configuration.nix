@@ -119,6 +119,11 @@
   hardware.nvidia-container-toolkit.enable = true;
   services.xserver.videoDrivers = ["nvidia"];
 
+  # usb 'users' group access to USB device for VM
+  services.udev.extraRules = ''
+    SUBSYSTEM=="usb", ATTR{idVendor}=="346d", ATTR{idProduct}=="5678", GROUP="users", MODE="0660"
+  '';
+
   users.users.ca4mi = {
     isNormalUser = true;
     extraGroups = [ "networkmanager" "wheel" "users" ];
