@@ -142,6 +142,7 @@
       obsidian
       discord
       mediawriter
+      mullvad-browser
       signal-desktop
       davinci-resolve
       wineWowPackages.staging
@@ -153,6 +154,7 @@
       obs-studio
       mediainfo
       handbrake
+      libreoffice
     ];
   };
 

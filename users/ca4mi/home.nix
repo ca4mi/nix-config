@@ -25,9 +25,6 @@
   home.packages = with pkgs; [
     git-crypt
     kitty
-    obs-studio
-    mullvad-browser
-    libreoffice
     tmux
     gphoto2
   ];
