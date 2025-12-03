@@ -13,7 +13,7 @@
       extraConfig = {
         core = {
           sshCommand = "ssh -o 'IdentitiesOnly=yes' -i ~/.ssh/ca4mi";
-	};
+        };
       };
     };
   };
