@@ -73,7 +73,7 @@
 
     # home-manager switch --flake "git+file:.#ca4mi@nagato"
     homeConfigurations = {
-      "ca4mi@asahina" = home-manager.lib.homeManagerConfiguration {
+      "ca4mi@nagato" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [
