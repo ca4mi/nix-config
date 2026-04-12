@@ -76,7 +76,14 @@
     powerManagement.finegrained = false;
     open = false;
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
+      version = "565.77";
+      sha256_64bit = "sha256-CnqnQsRrzzTXZpgkAtF7PbH9s7wbiTRNcM0SPByzFHw=";
+      sha256_aarch64 = "sha256-8hyRiGB+m2hL3c9MDA/Pon+Xl6zhdQjFoza8Mk5tmJ8=";
+      openSha256 = "sha256-mRUTEWVsbjq+psVe+kAT6MjyZuLkG2yRSaCidzvI4Mc=";
+      settingsSha256 = "sha256-VUetj3LlOSz/LB+DDfMCN34uA4bNTTpjDrb6C6Iwukk=";
+      persistencedSha256 = "sha256-3RmWmkJvGRZ9w0LJkMI2MiwxiB5tMJEnzpUTNLhO5uA=";
+    };
   };
 
   # prime 
