@@ -147,7 +147,6 @@
       burpsuite
       anydesk
       obsidian
-      discord
       mediawriter
       mullvad-browser
       signal-desktop
