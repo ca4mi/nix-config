@@ -146,7 +146,6 @@
       freerdp
       burpsuite
       anydesk
-      obsidian
       mediawriter
       mullvad-browser
       signal-desktop
