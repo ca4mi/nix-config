@@ -160,6 +160,7 @@
       mediainfo
       handbrake
       libreoffice
+      syncthing
     ];
   };
 
