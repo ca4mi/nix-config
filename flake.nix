@@ -71,7 +71,7 @@
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [
           inputs.agenix.homeManagerModules.default
-	  inputs.nix-openclaw.homeManagerModules.default
+	  inputs.nix-openclaw.homeManagerModules.openclaw
           ./users/ca4mi/home.nix 
         ];
       };
