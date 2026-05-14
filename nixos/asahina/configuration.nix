@@ -154,7 +154,7 @@
       davinci-resolve
       wineWowPackages.staging
       bottles
-      lutris
+      # lutris
       vlc
       totem
       darktable
