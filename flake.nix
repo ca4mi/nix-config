@@ -22,6 +22,11 @@
       url = "git+ssh://git@github.com/ca4mi/secrets.git";
       flake = false;
     };
+
+    nix-openclaw = {
+      url = "github:openclaw/nix-openclaw";
+    };
+
   };
 
   outputs = {
@@ -65,7 +70,8 @@
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [
-          inputs.agenix.homeManagerModules.default 
+          inputs.agenix.homeManagerModules.default
+	  inputs.nix-openclaw.homeManagerModules.default
           ./users/ca4mi/home.nix 
         ];
       };

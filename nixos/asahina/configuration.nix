@@ -119,6 +119,15 @@
   hardware.nvidia-container-toolkit.enable = true;
   services.xserver.videoDrivers = ["nvidia"];
 
+  # Ollama with CUDA
+  services.ollama = {
+    enable       = true;
+    acceleration = "cuda";
+    loadModels   = [ "qwen2.5:7b" "mistral:7b" ];
+    environmentVariables = {
+      OLLAMA_NUM_CTX = "65536";
+    };
+  };
   # usb 'users' group access to USB device for VM
   # services.udev.extraRules = ''
   #   SUBSYSTEM=="usb", ATTR{idVendor}=="346d", ATTR{idProduct}=="5678", GROUP="users", MODE="0660"
@@ -184,6 +193,7 @@
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [
     8096
+    11434
   ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
