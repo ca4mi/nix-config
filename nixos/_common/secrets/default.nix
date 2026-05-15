@@ -23,6 +23,12 @@
         mode  = "0400";
       };
 
+      anthropicApiKey = {
+        file  = "${inputs.secrets}/anthropicApiKey.age";
+        owner = "ca4mi";
+        mode  = "0400";
+      };
+
     };
   };
 }
