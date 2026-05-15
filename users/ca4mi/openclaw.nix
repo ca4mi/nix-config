@@ -8,6 +8,7 @@
       TELEGRAM_BOT_TOKEN     = "/run/agenix/telegramBotToken";
       OPENCLAW_GATEWAY_TOKEN = "/run/agenix/openclawGatewayToken";
       OLLAMA_API_KEY         = "ollama-local";
+      ANTHROPIC_API_KEY      = "/run/agenix/anthropicApiKey";
     };
 
     documents = ./documents;
@@ -23,9 +24,22 @@
         ];
       };
 
+      models.providers.anthropic = {
+        api    = "anthropic-messages";
+        apiKey = {
+          source   = "env";
+          id       = "ANTHROPIC_API_KEY";
+          provider = "anthropic";
+        };
+        models = [
+          { id = "claude-haiku-4-5-20251001"; name = "claude-haiku-4-5-20251001"; }
+          { id = "claude-sonnet-4-5";         name = "claude-sonnet-4-5"; }
+        ];
+      };
+
       agents.defaults.model = {
-        primary   = "ollama/llama3.2:3b";
-        fallbacks = [ "ollama/mistral:7b" ];
+        primary   = "anthropic/claude-haiku-4-5-20251001";
+        fallbacks = [ "ollama/qwen2.5:7b-fast" ];
       };
 
       gateway = {
