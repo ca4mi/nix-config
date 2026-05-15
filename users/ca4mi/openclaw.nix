@@ -18,8 +18,8 @@
         apiKey  = "ollama-local";
         baseUrl = "http://127.0.0.1:11434";
         models  = [
-          { name = "qwen2.5:7b"; }
-          { name = "mistral:7b"; }
+          { id = "qwen2.5:7b"; name = "qwen2.5:7b"; reasoning = false; }
+          { id = "mistral:7b"; name = "mistral:7b"; reasoning = false; }
         ];
       };
 

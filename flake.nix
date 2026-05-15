@@ -72,6 +72,7 @@
         modules = [
           inputs.agenix.homeManagerModules.default
 	  inputs.nix-openclaw.homeManagerModules.openclaw
+	  { nixpkgs.overlays = [ inputs.nix-openclaw.overlays.default ]; }
           ./users/ca4mi/home.nix 
         ];
       };
