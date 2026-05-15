@@ -27,14 +27,10 @@
       models.providers.anthropic = {
         api    = "anthropic-messages";
 	baseUrl = "https://api.anthropic.com";
-        apiKey = {
-          source   = "env";
-          id       = "ANTHROPIC_API_KEY";
-          provider = "anthropic";
-        };
+	apiKey  = "ANTHROPIC_API_KEY";
         models = [
-          { id = "claude-haiku-4-5-20251001"; name = "claude-haiku-4-5-20251001"; }
-          { id = "claude-sonnet-4-5";         name = "claude-sonnet-4-5"; }
+          { id = "claude-haiku-4-5-20251001"; name = "claude-haiku-4-5-20251001"; maxTokens = 4096; }
+          { id = "claude-sonnet-4-5";         name = "claude-sonnet-4-5";         maxTokens = 4096; }
         ];
       };
 
