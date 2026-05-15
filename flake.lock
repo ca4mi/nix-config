@@ -290,11 +290,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1778729395,
-        "narHash": "sha256-paT+RyxTO3Z/vA8anOtdtBPsQzwmSQQw6SvNom/Gk+Y=",
+        "lastModified": 1778814595,
+        "narHash": "sha256-CXJH1Dilm7Av7HJa02giKr/ykf+4Qhr9AVakA0Y+TUM=",
         "ref": "refs/heads/main",
-        "rev": "5b8c8692526cae37176817494e30e1acfe8f92e5",
-        "revCount": 20,
+        "rev": "3c59b80b59b5d0f1b5bbc5c5eb750201ff01e573",
+        "revCount": 21,
         "type": "git",
         "url": "ssh://git@github.com/ca4mi/secrets.git"
       },
