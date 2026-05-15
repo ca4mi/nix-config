@@ -123,9 +123,10 @@
   services.ollama = {
     enable       = true;
     acceleration = "cuda";
-    loadModels   = [ "qwen2.5:7b" "mistral:7b" ];
+    loadModels   = [ "llama3.2:3b" "mistral:7b" ];
     environmentVariables = {
-      OLLAMA_NUM_CTX = "65536";
+      OLLAMA_NUM_CTX    = "4096";
+      # OLLAMA_NUM_CTX = "65536";
     };
   };
   # usb 'users' group access to USB device for VM
