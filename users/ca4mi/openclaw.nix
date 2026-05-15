@@ -18,14 +18,14 @@
         apiKey  = "ollama-local";
         baseUrl = "http://127.0.0.1:11434";
         models  = [
-          { id = "qwen2.5:7b"; name = "qwen2.5:7b"; reasoning = false; }
-          { id = "mistral:7b"; name = "mistral:7b"; reasoning = false; }
+          { id = "gemma3:4b"; name = "gemma3:4b"; reasoning = false; }
+          { id = "qwen2.5:3b"; name = "qwen2.5:3b"; reasoning = false; }
         ];
       };
 
       agents.defaults.model = {
-        primary   = "ollama/qwen2.5:7b";
-        fallbacks = [ "ollama/mistral:7b" ];
+        primary   = "ollama/gemma3:4b";
+        fallbacks = [ "ollama/qwen2.5:3b" ];
       };
 
       gateway = {
