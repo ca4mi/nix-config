@@ -26,6 +26,7 @@
 
       models.providers.anthropic = {
         api    = "anthropic-messages";
+	baseUrl = "https://api.anthropic.com";
         apiKey = {
           source   = "env";
           id       = "ANTHROPIC_API_KEY";
