@@ -119,16 +119,28 @@
   hardware.nvidia-container-toolkit.enable = true;
   services.xserver.videoDrivers = ["nvidia"];
 
-  # Ollama with CUDA
+# Ollama with CUDA
   services.ollama = {
     enable       = true;
     acceleration = "cuda";
-    loadModels   = [ "llama3.2:3b" "mistral:7b" ];
+    # Replaced Llama and Mistral with Hermes 3
+    loadModels   = [ "hermes3:8b" "hermes3:3b" ];
     environmentVariables = {
-      OLLAMA_NUM_CTX    = "4096";
-      # OLLAMA_NUM_CTX = "65536";
+      OLLAMA_NUM_CTX    = "8192"; # Bumped this for the agent's memory
     };
   };
+
+  # Native Hermes Agent Configuration
+  services.hermes-agent = {
+    enable = true;
+    addToSystemPackages = true; 
+    settings.model.default = "ollama/hermes3:8b";
+    
+    # Optional: If you have agenix files that are in standard KEY=VALUE format, 
+    # you can pass them here so the agent can access your Anthropic API/Telegram keys.
+    # environmentFiles = [ "/run/agenix/hermesEnvFile" ]; 
+  };
+
   # usb 'users' group access to USB device for VM
   # services.udev.extraRules = ''
   #   SUBSYSTEM=="usb", ATTR{idVendor}=="346d", ATTR{idProduct}=="5678", GROUP="users", MODE="0660"

@@ -23,10 +23,9 @@
       flake = false;
     };
 
-    nix-openclaw = {
-      url = "github:openclaw/nix-openclaw";
+    hermes-agent = {
+      url = "github:NousResearch/hermes-agent";
     };
-
   };
 
   outputs = {
@@ -43,8 +42,6 @@
     forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
 
   in {
-    # nix-env -f '<nixpkgs>' -iA git
-    # Available through 'nixos-rebuild --flake .#your-hostname'
     # sudo nixos-rebuild switch --flake "git+file:.#asahina"
     nixosConfigurations = {
       asahina = nixpkgs.lib.nixosSystem {
@@ -54,6 +51,7 @@
           ./nixos/asahina/configuration.nix
           ./nixos/_common
           inputs.agenix.nixosModules.default
+          inputs.hermes-agent.nixosModules.default
           {
             nixpkgs.overlays = [
               (import ./pkgs/keyboard-layouts)
@@ -63,7 +61,6 @@
       };
     };
 
-    # Available through 'home-manager --flake .#your-username@your-hostname'
     # home-manager switch --flake "git+file:.#ca4mi@asahina"
     homeConfigurations = {
       "ca4mi@asahina" = home-manager.lib.homeManagerConfiguration {
@@ -71,8 +68,6 @@
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [
           inputs.agenix.homeManagerModules.default
-	  inputs.nix-openclaw.homeManagerModules.openclaw
-	  { nixpkgs.overlays = [ inputs.nix-openclaw.overlays.default ]; }
           ./users/ca4mi/home.nix 
         ];
       };
