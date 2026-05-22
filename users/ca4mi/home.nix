@@ -10,7 +10,6 @@
 {
   imports = [
     ./git.nix
-    ./openclaw.nix
   ];
 
   nixpkgs = {
