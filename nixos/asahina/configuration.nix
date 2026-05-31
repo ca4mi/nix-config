@@ -144,6 +144,12 @@
     environmentFiles = [ config.age.secrets.openrouterApiKey.path ];
   };
 
+  systemd.user.services.hermes-gateway = {
+    environment = {
+      PYTHONPATH = "${pkgs.python312Packages.python-telegram-bot}/lib/python3.12/site-packages";
+    };
+  };
+
   # usb 'users' group access to USB device for VM
   # services.udev.extraRules = ''
   #   SUBSYSTEM=="usb", ATTR{idVendor}=="346d", ATTR{idProduct}=="5678", GROUP="users", MODE="0660"
