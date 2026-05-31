@@ -122,12 +122,12 @@
 # Ollama with CUDA
   services.ollama = {
     enable       = true;
-    acceleration = "cuda";
+    package = pkgs.ollama-cuda;
     # Replaced Llama and Mistral with Hermes 3
-    loadModels   = [ "hermes3:8b" "hermes3:3b" ];
-    environmentVariables = {
-      OLLAMA_NUM_CTX    = "8192"; # Bumped this for the agent's memory
-    };
+    # loadModels   = [ "hermes3:8b" "hermes3:3b" ];
+    # environmentVariables = {
+    #   OLLAMA_NUM_CTX    = "8192"; # Bumped this for the agent's memory
+    # };
   };
 
   # Native Hermes Agent Configuration
@@ -165,7 +165,7 @@
       mullvad-browser
       signal-desktop
       davinci-resolve
-      wineWowPackages.staging
+      wineWow64Packages.stable
       bottles
       # lutris
       vlc
