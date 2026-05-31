@@ -17,18 +17,17 @@
         mode  = "0400";
       };
 
-      openclawGatewayToken = {
-        file  = "${inputs.secrets}/openclawGatewayToken.age";
-        owner = "ca4mi";
-        mode  = "0400";
-      };
-
       anthropicApiKey = {
         file  = "${inputs.secrets}/anthropicApiKey.age";
         owner = "ca4mi";
         mode  = "0400";
       };
 
+      openrouterApiKey = {
+      	file  = "${inputs.secrets}/openrouterApiKey.age";
+	owner = "ca4mi";
+	mode  = "0400";
+      };
     };
   };
 }

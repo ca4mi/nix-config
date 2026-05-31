@@ -130,15 +130,18 @@
     # };
   };
 
-  # Native Hermes Agent Configuration
+  # Hermes Agent Configuration
   services.hermes-agent = {
     enable = true;
-    addToSystemPackages = true; 
-    settings.model.default = "ollama/hermes3:8b";
-    
-    # Optional: If you have agenix files that are in standard KEY=VALUE format, 
-    # you can pass them here so the agent can access your Anthropic API/Telegram keys.
-    # environmentFiles = [ "/run/agenix/hermesEnvFile" ]; 
+    addToSystemPackages = true;
+    settings = {
+      model = {
+        default = "openrouter/owl-alpha";
+        provider = "openrouter";
+        base_url = "https://openrouter.ai/api/v1";
+      };
+    };
+    environmentFiles = [ config.age.secrets.openrouterApiKey.path ];
   };
 
   # usb 'users' group access to USB device for VM
