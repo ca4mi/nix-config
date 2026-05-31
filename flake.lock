@@ -96,11 +96,11 @@
         "uv2nix": "uv2nix_2"
       },
       "locked": {
-        "lastModified": 1780215393,
-        "narHash": "sha256-d3xq35+oF9s4UhtQhtfNNcpsOUxyaLFvm0+KerVAjeQ=",
+        "lastModified": 1780216891,
+        "narHash": "sha256-M0X+vwOkfO2mxqgOAFonUNDXBNWjptvWo8EA0L2Ia0c=",
         "owner": "NousResearch",
         "repo": "hermes-agent",
-        "rev": "0cd7d54b00106d8992803a918ce55d5c205550f3",
+        "rev": "4ccd141b15a4fe42992fd288cbd34ca60fb77bb3",
         "type": "github"
       },
       "original": {
@@ -322,11 +322,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1778825596,
-        "narHash": "sha256-/ELRm3Yc6ZYWfiVaQukQNTFfvAbEtna0SKv7cYfcFn4=",
+        "lastModified": 1780218115,
+        "narHash": "sha256-o7EzHGdvthdnbftA+H8e6rtHo6vi1jJcRZahN2Iniag=",
         "ref": "refs/heads/main",
-        "rev": "c456a9c966df5421fbcede063e6693eccc0f3aee",
-        "revCount": 22,
+        "rev": "83b0d07911029adaa7e34caab7b4c0feca559987",
+        "revCount": 23,
         "type": "git",
         "url": "ssh://git@github.com/ca4mi/secrets.git"
       },
