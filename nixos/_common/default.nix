@@ -61,7 +61,7 @@
     iotop
     nmap
     jq
-    inputs.agenix.packages."${system}".default
+    inputs.agenix.packages."${pkgs.stdenv.hostPlatform.system}".default
     podman
     podman-compose
     ffmpeg
