@@ -28,6 +28,12 @@
 	owner = "ca4mi";
 	mode  = "0400";
       };
+
+     telegramAllowedChats = {
+       file  = "${inputs.secrets}/telegramAllowedChats.age";
+       owner = "ca4mi";
+       mode  = "0400";
+       };
     };
   };
 }

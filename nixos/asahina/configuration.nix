@@ -135,13 +135,15 @@
     enable = true;
     addToSystemPackages = true;
     settings = {
-      model = {
-        default = "openrouter/owl-alpha";
-        provider = "openrouter";
-        base_url = "https://openrouter.ai/api/v1";
-      };
+      model.default = "openrouter/owl-alpha";
+      model.provider = "openrouter";
+      model.base_url = "https://openrouter.ai/api/v1";
     };
-    environmentFiles = [ config.age.secrets.openrouterApiKey.path ];
+    environmentFiles = [ 
+      config.age.secrets.openrouterApiKey.path
+      config.age.secrets.telegramBotToken.path
+      config.age.secrets.telegramAllowedChats.path
+    ];
   };
 
   systemd.user.services.hermes-gateway = {

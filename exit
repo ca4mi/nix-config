@@ -1,0 +1,83 @@
+[1mdiff --git a/flake.lock b/flake.lock[m
+[1mindex 34583e5..f0e90b0 100644[m
+[1m--- a/flake.lock[m
+[1m+++ b/flake.lock[m
+[36m@@ -322,11 +322,11 @@[m
+     "secrets": {[m
+       "flake": false,[m
+       "locked": {[m
+[31m-        "lastModified": 1780218115,[m
+[31m-        "narHash": "sha256-o7EzHGdvthdnbftA+H8e6rtHo6vi1jJcRZahN2Iniag=",[m
+[32m+[m[32m        "lastModified": 1780221161,[m
+[32m+[m[32m        "narHash": "sha256-RE4eeks/hlmJYq0EsUMHvfNZbLscUhEcnYQICvYY+qE=",[m
+         "ref": "refs/heads/main",[m
+[31m-        "rev": "83b0d07911029adaa7e34caab7b4c0feca559987",[m
+[31m-        "revCount": 23,[m
+[32m+[m[32m        "rev": "ddd09570cfd325373494208f595ae192d7426abb",[m
+[32m+[m[32m        "revCount": 25,[m
+         "type": "git",[m
+         "url": "ssh://git@github.com/ca4mi/secrets.git"[m
+       },[m
+[1mdiff --git a/nixos/_common/secrets/default.nix b/nixos/_common/secrets/default.nix[m
+[1mindex efe690f..4d0feb0 100644[m
+[1m--- a/nixos/_common/secrets/default.nix[m
+[1m+++ b/nixos/_common/secrets/default.nix[m
+[36m@@ -28,6 +28,12 @@[m
+ 	owner = "ca4mi";[m
+ 	mode  = "0400";[m
+       };[m
+[32m+[m
+[32m+[m[32m     telegramAllowedChats = {[m
+[32m+[m[32m       file  = "${inputs.secrets}/telegramAllowedChats.age";[m
+[32m+[m[32m       owner = "ca4mi";[m
+[32m+[m[32m       mode  = "0400";[m
+[32m+[m[32m       };[m
+     };[m
+   };[m
+ }[m
+[1mdiff --git a/nixos/asahina/configuration.nix b/nixos/asahina/configuration.nix[m
+[1mindex 38ad8d3..1ac8e0c 100644[m
+[1m--- a/nixos/asahina/configuration.nix[m
+[1m+++ b/nixos/asahina/configuration.nix[m
+[36m@@ -135,13 +135,35 @@[m
+     enable = true;[m
+     addToSystemPackages = true;[m
+     settings = {[m
+[31m-      model = {[m
+[31m-        default = "openrouter/owl-alpha";[m
+[31m-        provider = "openrouter";[m
+[31m-        base_url = "https://openrouter.ai/api/v1";[m
+[31m-      };[m
+[32m+[m[32m      model.default = "openrouter/owl-alpha";[m
+[32m+[m[32m      model.provider = "openrouter";[m
+[32m+[m[32m      model.base_url = "https://openrouter.ai/api/v1";[m
+[32m+[m[32m    };[m
+[32m+[m[32m    environmentFiles = [[m[41m [m
+[32m+[m[32m      config.age.secrets.openrouterApiKey.path[m
+[32m+[m[32m      config.age.secrets.telegramBotToken.path[m
+[32m+[m[32m      config.age.secrets.telegramAllowedChats.path[m
+[32m+[m[32m    ];[m
+[32m+[m[32m  };[m
+[32m+[m
+[32m+[m[32m  systemd.user.services.process-hermes-transactions = {[m
+[32m+[m[32m    description = "Sync spooled transactions from sandboxed Hermes to Obsidian";[m
+[32m+[m[32m    script = ''[m
+[32m+[m[32m      # Nix evaluates ${config.users.users.ca4mi.home} dynamically based on your config![m
+[32m+[m[32m      ${config.users.users.ca4mi.home}/.venv-cloak/bin/python3 ${config.users.users.ca4mi.home}/Documents/Obsidian/Finance/process_spool.py[m
+[32m+[m[32m    '';[m
+[32m+[m[32m    serviceConfig = {[m
+[32m+[m[32m      Type = "oneshot";[m
+[32m+[m[32m    };[m
+[32m+[m[32m  };[m
+[32m+[m
+[32m+[m[32m  systemd.user.timers.process-hermes-transactions = {[m
+[32m+[m[32m    description = "Run Hermes transaction sync every hour";[m
+[32m+[m[32m    wantedBy = [ "timers.target" ];[m
+[32m+[m[32m    timerConfig = {[m
+[32m+[m[32m      OnCalendar = "hourly";[m
+[32m+[m[32m      Persistent = true;[m
+     };[m
+[31m-    environmentFiles = [ config.age.secrets.openrouterApiKey.path ];[m
+   };[m
+ [m
+   systemd.user.services.hermes-gateway = {[m
