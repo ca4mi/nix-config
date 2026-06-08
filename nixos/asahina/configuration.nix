@@ -120,15 +120,15 @@
   services.xserver.videoDrivers = ["nvidia"];
 
 # Ollama with CUDA
-  services.ollama = {
-    enable       = true;
-    package = pkgs.ollama-cuda;
+#  services.ollama = {
+#    enable       = true;
+#    package = pkgs.ollama-cuda;
     # Replaced Llama and Mistral with Hermes 3
     # loadModels   = [ "hermes3:8b" "hermes3:3b" ];
     # environmentVariables = {
     #   OLLAMA_NUM_CTX    = "8192"; # Bumped this for the agent's memory
     # };
-  };
+#  };
 
   # Hermes Agent Configuration
   services.hermes-agent = {
