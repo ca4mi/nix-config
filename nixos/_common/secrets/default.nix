@@ -6,6 +6,7 @@
   age = {
     identityPaths = [
       "/home/ca4mi/.ssh/ca4mi"
+      "/ssh/ssh_host_ed25519_key"
     ];
     secrets = {
       hashedUserPassword.file = "${inputs.secrets}/hashedUserPassword.age";
