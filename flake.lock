@@ -52,11 +52,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1780290312,
-        "narHash": "sha256-eTAlX0CwgB84Ts3GaBd944A3DRXVMzgA0EqroZBISUo=",
+        "lastModified": 1781152676,
+        "narHash": "sha256-RxWs5ND31KzTG7wvMM+PMfUjyNpmIEr999lqNARaM5o=",
         "owner": "nix-community",
         "repo": "disko",
-        "rev": "115e5211780054d8a890b41f0b7734cafad54dfe",
+        "rev": "ff8702b4de27f72b4c78573dfb89ec74e36abdf1",
         "type": "github"
       },
       "original": {
@@ -96,11 +96,11 @@
         "uv2nix": "uv2nix_2"
       },
       "locked": {
-        "lastModified": 1780882400,
-        "narHash": "sha256-8VrDQr1uFuVT5OZ7M2JjTiRtzg4evv4dhAlFIuKJEjk=",
+        "lastModified": 1781150804,
+        "narHash": "sha256-SDccCmUejmY/tROZRduFejEmsXEZvOA399zOv2Q2m/k=",
         "owner": "NousResearch",
         "repo": "hermes-agent",
-        "rev": "b97cd81c789927c0380ac0b8cd196f42c2781235",
+        "rev": "3e74f75e41ecd5a3b937d692ba7dcffbf77304f6",
         "type": "github"
       },
       "original": {
@@ -137,11 +137,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1780361225,
-        "narHash": "sha256-wnV9ttf4fPWNonBIQmvlrSlNpQYgx5HgWWd007mwIFA=",
+        "lastModified": 1781124985,
+        "narHash": "sha256-hIaUkf6qalGk2xxNEkBMP2m2aPBq+qXvUPOIwwEDySI=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "e28654b71096e08c019d4861ca26acb646f583d8",
+        "rev": "d899b01766784bcc9a141ee13bad6dc689d47c37",
         "type": "github"
       },
       "original": {
@@ -185,11 +185,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1780734595,
-        "narHash": "sha256-DmTfP92QFYRLOGXlMIE54MAgxSJjDWocl3gRNOu72Os=",
+        "lastModified": 1780902259,
+        "narHash": "sha256-q8yYEC5f1mFlQO9RGna4LTc9QrcvWunX6FYp83munkQ=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "9b696460ac78b5ccfc17c854d8c976f20456e943",
+        "rev": "bd0ff2d3eac24699c3664d5966b9ef36f388e2ca",
         "type": "github"
       },
       "original": {
@@ -322,11 +322,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1780370795,
-        "narHash": "sha256-b57brUOgg1PdXKtl0DnJ020opSLL48pKI4urQIzPnCI=",
+        "lastModified": 1781059290,
+        "narHash": "sha256-Q2PqXzbkaI+Fmu1Vk6NB4QUZHTjYF1w/uiyl7IRXrvk=",
         "ref": "refs/heads/main",
-        "rev": "b5e4f37050d808b55d457c48f9f1f08faeaea352",
-        "revCount": 27,
+        "rev": "cc94fc0f8f54d32449cd519af2b5ee8ebaa743e7",
+        "revCount": 28,
         "type": "git",
         "url": "ssh://git@github.com/ca4mi/secrets.git"
       },
