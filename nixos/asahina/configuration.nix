@@ -134,12 +134,16 @@
   services.hermes-agent = {
     enable = true;
     addToSystemPackages = true;
+    user = "ca4mi";
+    group = "users";
+    createUser = false;
     settings = {
-      model.default = "openrouter/owl-alpha";
-      model.provider = "openrouter";
-      model.base_url = "https://openrouter.ai/api/v1";
+      model.default = "deepseek-v4-pro";
+      model.provider = "deepseek";
+      model.base_url = "https://api.deepseek.com";
     };
-    environmentFiles = [ 
+    environmentFiles = [
+      config.age.secrets.deepseekApiKey.path
       config.age.secrets.openrouterApiKey.path
       config.age.secrets.telegramBotToken.path
       config.age.secrets.telegramAllowedChats.path

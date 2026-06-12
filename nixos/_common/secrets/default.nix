@@ -29,6 +29,13 @@
        owner = "ca4mi";
        mode  = "0400";
        };
+
+     deepseekApiKey = {
+       file = "${inputs.secrets}/deepseekApiKey.age";
+       owner = "ca4mi";
+       mode = "0400";
+       };
+
     };
   };
 }
