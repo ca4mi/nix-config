@@ -141,6 +141,8 @@
       model.default = "deepseek-v4-pro";
       model.provider = "deepseek";
       model.base_url = "https://api.deepseek.com";
+      model.reasoning_effort = "high";
+      display.show_reasoning = true;
     };
     environmentFiles = [
       config.age.secrets.deepseekApiKey.path
