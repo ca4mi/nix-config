@@ -183,7 +183,6 @@
       signal-desktop
       davinci-resolve
       wineWow64Packages.stable
-      bottles
       # lutris
       vlc
       totem
@@ -193,6 +192,7 @@
       handbrake
       libreoffice
       syncthing
+      cinny-desktop
     ];
   };
 
