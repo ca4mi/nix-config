@@ -120,15 +120,15 @@
   services.xserver.videoDrivers = ["nvidia"];
 
 # Ollama with CUDA
-#  services.ollama = {
-#    enable       = true;
-#    package = pkgs.ollama-cuda;
-    # Replaced Llama and Mistral with Hermes 3
-    # loadModels   = [ "hermes3:8b" "hermes3:3b" ];
-    # environmentVariables = {
-    #   OLLAMA_NUM_CTX    = "8192"; # Bumped this for the agent's memory
-    # };
-#  };
+  services.ollama = {
+    enable = true;
+    package = pkgs.ollama-cuda;
+    loadModels = [""];
+    # loadModels = ["justingtzk/gemma-4-26B-A4B-it-qat-GGUF:UD-Q4_K_XL_128K"];
+    environmentVariables = {
+      # OLLAMA_NUM_CTX = "8192"; # Bumped this for the agent's memory
+    };
+  };
 
   # Hermes Agent Configuration
   services.hermes-agent = {
@@ -138,7 +138,13 @@
     group = "users";
     createUser = false;
     settings = {
-      model.default = "deepseek-v4-pro";
+      # model.default = "justingtzk/gemma-4-26B-A4B-it-qat-GGUF:UD-Q4_K_XL_128K";
+      # model.provider = "custom";
+      # model.base_url = "http://127.0.0.1:11434/v1";
+      # model.temperature = 1.0;
+      # model.top_p = 0.95;
+      # model.top_k = 64;
+      model.default = "deepseek-v4-flash";
       model.provider = "deepseek";
       model.base_url = "https://api.deepseek.com";
       model.reasoning_effort = "high";
