@@ -120,6 +120,7 @@ in
   environment.systemPackages = with pkgs; [
     cudatoolkit
     nvtopPackages.nvidia
+    python313Packages.anthropic
   ];
 
   hardware.nvidia-container-toolkit.enable = true;
@@ -155,9 +156,9 @@ in
       # model.provider = "deepseek";
       # model.base_url = "https://api.deepseek.com";
       # anthropic
-      model.default = "claude-sonnet-5";
+      model.default = "claude-haiku-4-5-20251001";
       model.provider = "anthropic";
-      # model.base_url = "";
+      model.base_url = "https://openrouter.ai/api/v1";
       model.reasoning_effort = "high";
       display.show_reasoning = true;
     };
