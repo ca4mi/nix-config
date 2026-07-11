@@ -133,10 +133,10 @@ in
   services.ollama = {
     enable = true;
     package = pkgs.ollama-cuda;
-    loadModels = ["gemma4:12b-qat"];
-    # loadModels = ["justingtzk/gemma-4-26B-A4B-it-qat-GGUF:UD-Q4_K_XL_128K"];
+    # loadModels = ["gemma4:12b-qat"];
+    loadModels = ["justingtzk/gemma-4-26B-A4B-it-qat-GGUF:UD-Q4_K_XL_128K"];
     environmentVariables = {
-      # OLLAMA_NUM_CTX = "8192"; # Bumped this for the agent's memory
+      OLLAMA_NUM_CTX = "8192";
     };
   };
 
@@ -149,21 +149,23 @@ in
     group = "users";
     createUser = false;
     settings = {
-      # model.default = "justingtzk/gemma-4-26B-A4B-it-qat-GGUF:UD-Q4_K_XL_128K";
-      # model.provider = "custom";
-      # model.base_url = "http://127.0.0.1:11434/v1";
-      # model.temperature = 1.0;
-      # model.top_p = 0.95;
-      # model.top_k = 64;
+      model.default = "justingtzk/gemma-4-26B-A4B-it-qat-GGUF:UD-Q4_K_XL_128K";
+      model.provider = "custom";
+      model.base_url = "http://127.0.0.1:11434/v1";
+      model.temperature = 1.0;
+      model.top_p = 0.95;
+      model.top_k = 64;
+      model.reasoning_effort = "low";
+      display.show_reasoning = true;
       # deepseek
       # model.default = "deepseek-v4-flash";
       # model.provider = "deepseek";
       # model.base_url = "https://api.deepseek.com";
       # anthropic
-      model.default = "claude-haiku-4-5-20251001";
-      model.provider = "anthropic";
-      model.reasoning_effort = "high";
-      display.show_reasoning = true;
+      # model.default = "claude-haiku-4-5-20251001";
+      # model.provider = "anthropic";
+      # model.base_url = "";
+      # model.max_context_tokens = 200000;
     };
     environmentFiles = [
       config.age.secrets.anthropicApiKey.path
