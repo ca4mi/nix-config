@@ -6,6 +6,12 @@
   pkgs,
   ...
 }:
+let
+  pkgs-unstable = import inputs.nixpkgs-unstable {
+    system = pkgs.system;
+    config.allowUnfree = true;
+  };
+in
 {
   imports =
     [
@@ -123,7 +129,7 @@
   services.ollama = {
     enable = true;
     package = pkgs.ollama-cuda;
-    loadModels = [""];
+    loadModels = ["gemma4:12b-qat"];
     # loadModels = ["justingtzk/gemma-4-26B-A4B-it-qat-GGUF:UD-Q4_K_XL_128K"];
     environmentVariables = {
       # OLLAMA_NUM_CTX = "8192"; # Bumped this for the agent's memory
@@ -144,13 +150,19 @@
       # model.temperature = 1.0;
       # model.top_p = 0.95;
       # model.top_k = 64;
-      model.default = "deepseek-v4-flash";
-      model.provider = "deepseek";
-      model.base_url = "https://api.deepseek.com";
+      # deepseek
+      # model.default = "deepseek-v4-flash";
+      # model.provider = "deepseek";
+      # model.base_url = "https://api.deepseek.com";
+      # anthropic
+      model.default = "claude-sonnet-5";
+      model.provider = "anthropic";
+      # model.base_url = "";
       model.reasoning_effort = "high";
       display.show_reasoning = true;
     };
     environmentFiles = [
+      config.age.secrets.anthropicApiKey.path
       config.age.secrets.deepseekApiKey.path
       config.age.secrets.openrouterApiKey.path
       config.age.secrets.telegramBotToken.path
@@ -164,6 +176,14 @@
     };
   };
 
+  hardware.uinput.enable = true;
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+    capSysAdmin = true;
+    openFirewall = true;
+  };
+
   # usb 'users' group access to USB device for VM
   # services.udev.extraRules = ''
   #   SUBSYSTEM=="usb", ATTR{idVendor}=="346d", ATTR{idProduct}=="5678", GROUP="users", MODE="0660"
@@ -171,7 +191,7 @@
 
   users.users.ca4mi = {
     isNormalUser = true;
-    extraGroups = [ "networkmanager" "wheel" "users" ];
+    extraGroups = [ "networkmanager" "wheel" "users" "uinput" ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB6eAo8+0E5FTs0RgeZcBujZvElu1OK7kCI/EBZ0s2xi mail@ca4mi.net"
     ];
@@ -187,7 +207,8 @@
       mediawriter
       mullvad-browser
       signal-desktop
-      davinci-resolve
+      pkgs-unstable.davinci-resolve
+      # davinci-resolve
       wineWow64Packages.stable
       # lutris
       vlc
@@ -199,6 +220,7 @@
       libreoffice
       syncthing
       cinny-desktop
+      pcsx2
     ];
   };
 
