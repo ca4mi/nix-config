@@ -11,6 +11,10 @@ let
     system = pkgs.system;
     config.allowUnfree = true;
   };
+  hermesPython = pkgs.python312.withPackages (ps: [
+    ps.anthropic
+    ps.python-telegram-bot
+  ]);
 in
 {
   imports =
@@ -120,7 +124,6 @@ in
   environment.systemPackages = with pkgs; [
     cudatoolkit
     nvtopPackages.nvidia
-    python313Packages.anthropic
   ];
 
   hardware.nvidia-container-toolkit.enable = true;
@@ -140,6 +143,7 @@ in
   # Hermes Agent Configuration
   services.hermes-agent = {
     enable = true;
+    package = inputs.hermes-agent.packages.${pkgs.system}.default;
     addToSystemPackages = true;
     user = "ca4mi";
     group = "users";
@@ -158,7 +162,6 @@ in
       # anthropic
       model.default = "claude-haiku-4-5-20251001";
       model.provider = "anthropic";
-      model.base_url = "https://openrouter.ai/api/v1";
       model.reasoning_effort = "high";
       display.show_reasoning = true;
     };
@@ -171,11 +174,8 @@ in
     ];
   };
 
-  systemd.user.services.hermes-gateway = {
-    environment = {
-      PYTHONPATH = "${pkgs.python312Packages.python-telegram-bot}/lib/python3.12/site-packages";
-    };
-  };
+  systemd.services.hermes-agent.environment.PYTHONPATH =
+    "${hermesPython}/lib/python3.12/site-packages";
 
   hardware.uinput.enable = true;
   services.sunshine = {
