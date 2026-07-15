@@ -140,20 +140,25 @@ in
 
   # Hermes Agent Configuration
   services.hermes-agent = {
-    enable = false;
+    enable = true;
     package = inputs.hermes-agent.packages.${pkgs.system}.default;
     addToSystemPackages = true;
     user = "ca4mi";
     group = "users";
     createUser = false;
     settings = {
-      # model.default = "deepseek-v4-flash";
-      # model.provider = "deepseek";
-      # model.base_url = "https://api.deepseek.com";
+      model.default = "mimo-v2.5-pro";
+      model.provider = "xiaomi";
+
+      providers.xiaomi = {
+        type = "openai-api";
+        base_url = "https://api.xiaomimimo.com/v1";
+      };
     };
     environmentFiles = [
       config.age.secrets.telegramBotToken.path
       config.age.secrets.telegramAllowedChats.path
+      config.age.secrets.xiaomiApiKey.path
     ];
   };
 
