@@ -42,6 +42,17 @@
        mode = "0400";
      };
 
+     unslothStudioEnv = {
+       file  = "${inputs.secrets}/unslothStudioEnv.age";
+       owner = "ca4mi";
+       mode  = "0400";
+     };
+
+     unslothStudioApiKey = {
+       file  = "${inputs.secrets}/unslothStudioApiKey.age";
+       owner = "ca4mi";
+       mode  = "0400";
+     };
     };
   };
 }
