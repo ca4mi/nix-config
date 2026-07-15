@@ -130,7 +130,7 @@ in
 
 # Ollama with CUDA
   services.ollama = {
-    enable = false;
+    enable = true;
     package = pkgs.ollama-cuda;
     # loadModels = ["justingtzk/gemma-4-26B-A4B-it-qat-GGUF:UD-Q4_K_XL_128K"];
     environmentVariables = {
@@ -147,7 +147,7 @@ in
     group = "users";
     createUser = false;
     settings = {
-      model.default = "mimo-v2.5-pro";
+      model.default = "mimo-v2.5";
       model.provider = "xiaomi";
 
       providers.xiaomi = {
