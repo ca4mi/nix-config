@@ -18,22 +18,10 @@
         mode  = "0400";
       };
 
-      openrouterApiKey = {
-      	file  = "${inputs.secrets}/openrouterApiKey.age";
-	owner = "ca4mi";
-	mode  = "0400";
-      };
-
      telegramAllowedChats = {
        file  = "${inputs.secrets}/telegramAllowedChats.age";
        owner = "ca4mi";
        mode  = "0400";
-       };
-
-     deepseekApiKey = {
-       file = "${inputs.secrets}/deepseekApiKey.age";
-       owner = "ca4mi";
-       mode = "0400";
        };
 
      anthropicApiKey = {
@@ -42,17 +30,12 @@
        mode = "0400";
      };
 
-     unslothStudioEnv = {
-       file  = "${inputs.secrets}/unslothStudioEnv.age";
+     xiaomiApiKey = {
+       file = "${inputs.secrets}/xiaomiApiKey.age";
        owner = "ca4mi";
-       mode  = "0400";
+       mode = "0400";
      };
 
-     unslothStudioApiKey = {
-       file  = "${inputs.secrets}/unslothStudioApiKey.age";
-       owner = "ca4mi";
-       mode  = "0400";
-     };
     };
   };
 }
