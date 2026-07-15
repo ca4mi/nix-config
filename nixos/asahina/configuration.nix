@@ -140,6 +140,30 @@ in
     };
   };
 
+  systemd.services.hermes-provider-secrets = {
+    description = "Inject Unsloth Studio credential into Hermes custom_providers config";
+    before = [ "hermes-agent.service" ];
+    requiredBy = [ "hermes-agent.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      User = "ca4mi";
+    };
+    script = ''
+      set -a
+      . ${config.age.secrets.unslothStudioApiKey.path}
+      set +a
+      ${pkgs.yq-go}/bin/yq -i '
+        .custom_providers = [{
+          "name": "unsloth-studio",
+          "base_url": "http://127.0.0.1:8000/v1",
+          "api_key": strenv(OPENAI_API_KEY),
+          "model": "unsloth/Qwen3-4B-Instruct-2507-GGUF"
+        }]
+      ' /var/lib/hermes/.hermes/config.yaml
+    '';
+  };
+
   # Hermes Agent Configuration
   services.hermes-agent = {
     enable = true;
@@ -149,14 +173,43 @@ in
     group = "users";
     createUser = false;
     settings = {
-      model.default = "justingtzk/gemma-4-26B-A4B-it-qat-GGUF:UD-Q4_K_XL_128K";
-      model.provider = "custom";
-      model.base_url = "http://127.0.0.1:11434/v1";
-      model.temperature = 1.0;
-      model.top_p = 0.95;
-      model.top_k = 64;
-      model.reasoning_effort = "low";
-      display.show_reasoning = true;
+      # local
+      model.default = "unsloth/Qwen3-4B-Instruct-2507-GGUF";
+      # model.provider = "custom";
+      model.provider = "custom:unsloth-studio";
+      model.max_context_tokens = 32768;
+#      agent.disabled_toolsets = [
+#        "vision"
+#        "image_gen"
+#        "tts"
+#        "computer_use"
+#        "web"
+#      ];
+#      skills.platform_disabled.telegram = [
+#        "computer-use" "design-taste-frontend" "dogfood" "minimalist-ui" "online-browser"
+#        "yuanbao" "ai-coding-agents" "hermes-agent" "architecture-diagram" "ascii-art"
+#        "ascii-video" "baoyu-infographic" "claude-design" "comfyui" "design-md"
+#        "excalidraw" "humanizer" "manim-video" "p5js" "popular-web-designs"
+#        "pretext" "sketch" "songwriting-and-ai-music" "touchdesigner-mcp" "jupyter-live-kernel"
+#        "himalaya" "github-auth" "github-code-review" "github-issues" "github-pr-workflow"
+#        "github-repo-management" "gif-search" "heartmula" "jellyfin-media-org" "songsee"
+#        "youtube-content" "audiocraft-audio-generation" "evaluating-llms-harness" "huggingface-hub" "llama-cpp"
+#        "obliteratus" "ollama-local-models" "segment-anything-model" "serving-llms-vllm" "weights-and-biases"
+#        "airtable" "google-workspace" "nano-pdf" "notion" "ocr-and-documents"
+#        "pdf-to-markdown" "powerpoint" "teams-meeting-pipeline" "godmode" "arxiv"
+#        "blogwatcher" "llm-wiki" "polymarket" "research-paper-writing" "openhue"
+#        "xurl" "cloakbrowser-scraping" "environment-troubleshooting" "hermes-agent-skill-authoring" "plan"
+#        "requesting-code-review" "simplify-code" "spike" "systematic-debugging" "test-driven-development"
+#      ];
+      # model.base_url = "http://127.0.0.1:8000/v1";
+      # model.default = "justingtzk/gemma-4-26B-A4B-it-qat-GGUF:UD-Q4_K_XL_128K";
+      # model.provider = "custom";
+      # model.base_url = "http://127.0.0.1:11434/v1";
+      # model.temperature = 1.0;
+      # model.top_p = 0.95;
+      # model.top_k = 64;
+      # model.reasoning_effort = "low";
+      # display.show_reasoning = true;
       # deepseek
       # model.default = "deepseek-v4-flash";
       # model.provider = "deepseek";
@@ -168,11 +221,12 @@ in
       # model.max_context_tokens = 200000;
     };
     environmentFiles = [
-      config.age.secrets.anthropicApiKey.path
-      config.age.secrets.deepseekApiKey.path
-      config.age.secrets.openrouterApiKey.path
+      # config.age.secrets.anthropicApiKey.path
+      # config.age.secrets.deepseekApiKey.path
+      # config.age.secrets.openrouterApiKey.path
       config.age.secrets.telegramBotToken.path
       config.age.secrets.telegramAllowedChats.path
+      config.age.secrets.unslothStudioApiKey.path
     ];
   };
 
@@ -185,6 +239,97 @@ in
     autoStart = true;
     capSysAdmin = true;
     openFirewall = true;
+  };
+
+  virtualisation.oci-containers.containers.unsloth-studio = {
+    image = "unsloth/unsloth";
+    autoStart = true;
+    ports = [
+      "127.0.0.1:8000:8000"
+    ];
+    volumes = [
+      "/var/lib/unsloth-studio/work:/workspace/work"
+      "/var/lib/unsloth-studio/cache:/workspace/.cache"
+      "/var/lib/unsloth-studio/studio:/workspace/studio"
+    ];
+    environmentFiles = [
+      config.age.secrets.unslothStudioEnv.path
+    ];
+    extraOptions = [
+      "--device=nvidia.com/gpu=all"
+      "--sysctl=net.ipv6.conf.all.disable_ipv6=1"
+    ];
+  };
+
+  systemd.tmpfiles.rules = [
+    "d /var/lib/unsloth-studio 0770 1001 102 -"
+    "d /var/lib/unsloth-studio/work 0770 1001 102 -"
+    "d /var/lib/unsloth-studio/cache 0770 1001 102 -"
+    "d /var/lib/unsloth-studio/studio 0770 1001 102 -"
+  ];
+
+  systemd.services.unsloth-studio-autoload.script = ''
+    set -a
+    . ${config.age.secrets.unslothStudioApiKey.path}
+    set +a
+    ${pkgs.yq-go}/bin/yq '
+      .custom_providers = [{
+        "name": "unsloth-studio",
+        "base_url": "http://127.0.0.1:8000/v1",
+        "api_key": strenv(OPENAI_API_KEY),
+        "model": "unsloth/Qwen3-4B-Instruct-2507-GGUF"
+      }]
+    ' /var/lib/hermes/.hermes/config.yaml > /var/lib/hermes/.hermes/config.yaml.tmp
+    mv /var/lib/hermes/.hermes/config.yaml.tmp /var/lib/hermes/.hermes/config.yaml
+
+    for i in $(seq 1 60); do
+      if ${pkgs.curl}/bin/curl -sf http://127.0.0.1:8000/api/health >/dev/null 2>&1; then
+        break
+      fi
+      sleep 5
+    done
+
+    for i in $(seq 1 10); do
+      RESPONSE=$(${pkgs.curl}/bin/curl -sf -X POST http://127.0.0.1:8000/v1/load \
+        -H "Authorization: Bearer $OPENAI_API_KEY" \
+        -H "Content-Type: application/json" \
+        -d '{
+          "model_path": "unsloth/Qwen3-4B-Instruct-2507-GGUF",
+          "gguf_variant": "IQ4_XS",
+          "max_seq_length": 32768,
+	  "cache_type_kv": "q8_0"
+        }' 2>&1) && break
+      echo "Load attempt $i failed, retrying in 5s: $RESPONSE"
+      sleep 5
+    done
+  '';
+
+  systemd.services.hermes-agent = {
+    after = [ "unsloth-studio-autoload.service" ];
+    requires = [ "unsloth-studio-autoload.service" ];
+  };
+
+  systemd.services.unsloth-model-healthcheck = {
+    description = "Ensure Unsloth Studio has a model loaded";
+    serviceConfig = { Type = "oneshot"; User = "ca4mi"; };
+    script = ''
+      set -a
+      . ${config.age.secrets.unslothStudioApiKey.path}
+      set +a
+      LOADED=$(${pkgs.curl}/bin/curl -sf http://127.0.0.1:8000/v1/models \
+        -H "Authorization: Bearer $OPENAI_API_KEY" | ${pkgs.jq}/bin/jq -r '.data | length')
+      if [ "$LOADED" = "0" ] || [ -z "$LOADED" ]; then
+        ${pkgs.curl}/bin/curl -X POST http://127.0.0.1:8000/v1/load \
+          -H "Authorization: Bearer $OPENAI_API_KEY" \
+          -H "Content-Type: application/json" \
+          -d '{"model_path": "unsloth/Qwen3-4B-Instruct-2507-GGUF", "gguf_variant": "IQ4_XS", "max_seq_length": 32768, "cache_type_kv": "q8_0"}'
+      fi
+    '';
+  };
+
+  systemd.timers.unsloth-model-healthcheck = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = { OnBootSec = "2m"; OnUnitActiveSec = "2m"; };
   };
 
   # usb 'users' group access to USB device for VM
