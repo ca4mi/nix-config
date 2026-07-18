@@ -36,6 +36,12 @@
        mode = "0400";
      };
 
+     xiaomiTokenPlanKey = {
+       file = "${inputs.secrets}/xiaomiTokenPlanKey.age";
+       owner = "ca4mi";
+       mode = "0400";
+     };
+
     };
   };
 }
