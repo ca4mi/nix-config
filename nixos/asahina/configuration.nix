@@ -147,7 +147,7 @@ in
     group = "users";
     createUser = false;
     settings = {
-      model.default = "mimo-v2.5-pro";
+      model.default = "mimo-v2.5";
       model.provider = "xiaomi";
       model.base_url = "https://token-plan-sgp.xiaomimimo.com/v1";
 
@@ -244,5 +244,13 @@ in
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
+
+  services.syncthing = {
+    enable = true;
+    user = "ca4mi";
+    group = "users";
+    openDefaultPorts = true;
+    guiAddress = "0.0.0.0:8384";
+  };
 
 }
