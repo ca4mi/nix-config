@@ -147,18 +147,19 @@ in
     group = "users";
     createUser = false;
     settings = {
-      model.default = "mimo-v2.5";
+      model.default = "mimo-v2.5-pro";
       model.provider = "xiaomi";
+      model.base_url = "https://token-plan-sgp.xiaomimimo.com/v1";
 
       providers.xiaomi = {
         type = "openai-api";
-        base_url = "https://api.xiaomimimo.com/v1";
+	base_url = "https://token-plan-sgp.xiaomimimo.com/v1";
       };
     };
     environmentFiles = [
       config.age.secrets.telegramBotToken.path
       config.age.secrets.telegramAllowedChats.path
-      config.age.secrets.xiaomiApiKey.path
+      config.age.secrets.xiaomiTokenPlanKey.path
     ];
   };
 
