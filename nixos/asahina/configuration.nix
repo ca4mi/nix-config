@@ -249,8 +249,17 @@ in
     enable = true;
     user = "ca4mi";
     group = "users";
-    openDefaultPorts = true;
+    configDir = "/home/ca4mi/.local/state/syncthing";
+    dataDir = "/home/ca4mi/.local/state/syncthing";
+    openDefaultPorts = false;
     guiAddress = "0.0.0.0:8384";
+
+    settings.options = {
+      globalAnnounceEnabled = false;
+      relaysEnabled = false;
+      natTraversalEnabled = false;
+      localAnnounceEnabled = false;
+    };
   };
 
 }
