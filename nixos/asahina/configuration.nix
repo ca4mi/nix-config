@@ -11,8 +11,10 @@ let
     system = pkgs.system;
     config.allowUnfree = true;
   };
-  hermesPython = pkgs.python312.withPackages (ps: [
-    ps.python-telegram-bot
+  hermesPython = pkgs.python313.withPackages (ps: [
+    (ps.python-telegram-bot.overridePythonAttrs (old: {
+      doCheck = false;
+    }))
   ]);
 in
 {
@@ -164,7 +166,7 @@ in
   };
 
   systemd.services.hermes-agent.environment.PYTHONPATH =
-    "${hermesPython}/lib/python3.12/site-packages";
+    "${hermesPython}/lib/python3.13/site-packages";
 
   hardware.uinput.enable = true;
   services.sunshine = {
