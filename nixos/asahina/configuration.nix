@@ -155,8 +155,13 @@ in
 
       providers.xiaomi = {
         type = "openai-api";
+
 	base_url = "https://token-plan-sgp.xiaomimimo.com/v1";
       };
+
+
+      agent.disabled_toolsets = [ "vision" "image_gen" "computer_use" "web" ];
+      tools.disabled_toolsets = [ "vision" "image_gen" "computer_use" "web" ];
     };
     environmentFiles = [
       config.age.secrets.telegramBotToken.path
@@ -173,7 +178,7 @@ in
     enable = true;
     autoStart = true;
     capSysAdmin = true;
-    openFirewall = true;
+    openFirewall = false;  # Tailscale-only
   };
 
   # usb 'users' group access to USB device for VM
@@ -211,6 +216,7 @@ in
       syncthing
       cinny-desktop
       pcsx2
+      vicinae
     ];
   };
 
@@ -238,14 +244,7 @@ in
     };
   };
 
-  # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [
-    8096
-    11434
-  ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall.allowedTCPPorts = lib.mkForce [];
 
   services.syncthing = {
     enable = true;
