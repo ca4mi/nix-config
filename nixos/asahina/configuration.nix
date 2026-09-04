@@ -143,7 +143,7 @@ in
   # Hermes Agent Configuration
   services.hermes-agent = {
     enable = true;
-    package = inputs.hermes-agent.packages.${pkgs.system}.default;
+    package = inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default;
     addToSystemPackages = true;
     user = "ca4mi";
     group = "users";
