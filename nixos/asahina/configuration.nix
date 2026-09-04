@@ -8,7 +8,7 @@
 }:
 let
   pkgs-unstable = import inputs.nixpkgs-unstable {
-    localSystem = pkgs.stdenv.hostPlatform;
+    localSystem = { system = "x86_64-linux"; };
     config.allowUnfree = true;
   };
 #  hermesPython = pkgs.python313.withPackages (ps: [
