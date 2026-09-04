@@ -45,7 +45,6 @@
     # sudo nixos-rebuild switch --flake "git+file:.#asahina"
     nixosConfigurations = {
       asahina = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
         specialArgs = {inherit inputs outputs;};
         modules = [
           ./nixos/asahina/configuration.nix
@@ -88,7 +87,6 @@
     # nixos-install --root "/mnt" --no-root-passwd --flake "git+file:///mnt/etc/nixos#nagato"
     nixosConfigurations = {
       nagato = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
         specialArgs = {inherit inputs outputs;};
         modules = [
           ./nixos/nagato
