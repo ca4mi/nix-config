@@ -11,11 +11,11 @@ let
     system = pkgs.system;
     config.allowUnfree = true;
   };
-  hermesPython = pkgs.python313.withPackages (ps: [
-    (ps.python-telegram-bot.overridePythonAttrs (old: {
-      doCheck = false;
-    }))
-  ]);
+#  hermesPython = pkgs.python313.withPackages (ps: [
+#    (ps.python-telegram-bot.overridePythonAttrs (old: {
+#      doCheck = false;
+#    }))
+#  ]);
 in
 {
   imports =
@@ -149,7 +149,7 @@ in
     group = "users";
     createUser = false;
     settings = {
-      model.default = "mimo-v2.5";
+      model.default = "mimo-v2.5-pro";
       model.provider = "xiaomi";
       model.base_url = "https://token-plan-sgp.xiaomimimo.com/v1";
 
@@ -170,8 +170,16 @@ in
     ];
   };
 
-  systemd.services.hermes-agent.environment.PYTHONPATH =
-    "${hermesPython}/lib/python3.13/site-packages";
+# Workaround for upstream missing modules in the hermes-agent flake
+  systemd.services.hermes-agent.environment.PYTHONPATH = let
+    hermes-missing-modules = pkgs.runCommand "hermes-missing-modules" {} ''
+      mkdir -p $out
+      cp ${inputs.hermes-agent}/hermes_state_*.py $out/
+    '';
+  in "${hermes-missing-modules}";
+
+#  systemd.services.hermes-agent.environment.PYTHONPATH =
+#    "${hermesPython}/lib/python3.13/site-packages";
 
   hardware.uinput.enable = true;
   services.sunshine = {
@@ -245,6 +253,7 @@ in
   };
 
   networking.firewall.allowedTCPPorts = lib.mkForce [];
+  networking.firewall.allowPing = false;
 
   services.syncthing = {
     enable = true;
