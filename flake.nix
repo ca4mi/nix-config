@@ -67,7 +67,8 @@
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [
           inputs.agenix.homeManagerModules.default
-          ./users/ca4mi/home.nix 
+          inputs.hermes-agent.homeManagerModules.default
+          ./users/ca4mi/home.nix
         ];
       };
     };

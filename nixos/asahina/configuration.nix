@@ -156,9 +156,9 @@ in
       providers.xiaomi = {
         type = "openai-api";
 
+
 	base_url = "https://token-plan-sgp.xiaomimimo.com/v1";
       };
-
 
       agent.disabled_toolsets = [ "vision" "image_gen" "computer_use" "web" ];
       tools.disabled_toolsets = [ "vision" "image_gen" "computer_use" "web" ];
@@ -168,6 +168,9 @@ in
       config.age.secrets.telegramAllowedChats.path
       config.age.secrets.xiaomiTokenPlanKey.path
     ];
+    backend.mode = "serve";  # Hermes Desktop: provides /api/ws + /api/pty
+    backend.host = "0.0.0.0";  # reachable via Tailscale; LAN blocked by firewall
+    backend.port = 9119;
   };
 
 # Workaround for upstream missing modules in the hermes-agent flake
