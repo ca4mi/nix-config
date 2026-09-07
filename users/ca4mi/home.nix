@@ -83,6 +83,13 @@
   };
 
   programs.home-manager.enable = true;
+
+  # Hermes Desktop
+  programs.hermes-agent = {
+    enable = true;
+    desktop.enable = true;
+  };
+
   systemd.user.startServices = "sd-switch";
   home.stateVersion = "24.05";
 }
