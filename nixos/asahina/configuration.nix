@@ -16,6 +16,35 @@ let
 #      doCheck = false;
 #    }))
 #  ]);
+  # Workaround for upstream missing modules in the hermes-agent flake
+  hermes-missing-modules = pkgs.runCommand "hermes-missing-modules" {} ''
+    mkdir -p $out
+    cp ${inputs.hermes-agent}/hermes_state_*.py $out/
+  '';
+
+  # Wrapper that sources the same agenix secrets as the systemd service
+  hermes-desktop-wrapper = pkgs.writeShellScriptBin "hermes-desktop" ''
+    set -a
+    source ${config.age.secrets.telegramBotToken.path} 2>/dev/null || true
+    source ${config.age.secrets.telegramAllowedChats.path} 2>/dev/null || true
+    source ${config.age.secrets.xiaomiTokenPlanKey.path} 2>/dev/null || true
+    set +a
+    export PYTHONPATH="${hermes-missing-modules}''${PYTHONPATH:+:$PYTHONPATH}"
+    exec ${inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.desktop}/bin/hermes-desktop "$@"
+  '';
+
+  hermes-desktop-override = pkgs.makeDesktopItem {
+    name = "hermes";
+    desktopName = "Hermes";
+    genericName = "Hermes Desktop";
+    comment = "Launch Hermes Desktop";
+    exec = "${hermes-desktop-wrapper}/bin/hermes-desktop %U";
+    icon = "${inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.desktop}/share/icons/hicolor/1024x1024/apps/hermes.png";
+    terminal = false;
+    categories = [ "Utility" ];
+    startupNotify = true;
+    startupWMClass = "Hermes";
+  };
 in
 {
   imports =
@@ -125,6 +154,8 @@ in
   environment.systemPackages = with pkgs; [
     cudatoolkit
     nvtopPackages.nvidia
+    hermes-desktop-wrapper
+    hermes-desktop-override
   ];
 
   hardware.nvidia-container-toolkit.enable = true;
@@ -174,15 +205,9 @@ in
   };
 
 # Workaround for upstream missing modules in the hermes-agent flake
-  systemd.services.hermes-agent.environment.PYTHONPATH = let
-    hermes-missing-modules = pkgs.runCommand "hermes-missing-modules" {} ''
-      mkdir -p $out
-      cp ${inputs.hermes-agent}/hermes_state_*.py $out/
-    '';
-  in "${hermes-missing-modules}";
-
-#  systemd.services.hermes-agent.environment.PYTHONPATH =
-#    "${hermesPython}/lib/python3.13/site-packages";
+  systemd.services.hermes-agent.environment.PYTHONPATH = "${hermes-missing-modules}";
+  # Also available system-wide so Hermes Desktop (Electron → hermes CLI) finds the modules
+  environment.sessionVariables.PYTHONPATH = "${hermes-missing-modules}";
 
   hardware.uinput.enable = true;
   services.sunshine = {
