@@ -7,12 +7,6 @@
   pkgs,
   ...
 }:
-let
-  hermes-missing-modules = pkgs.runCommand "hermes-missing-modules" {} ''
-    mkdir -p $out
-    cp ${inputs.hermes-agent}/hermes_state_*.py $out/
-  '';
-in
 {
   imports = [
     ./git.nix
@@ -28,7 +22,6 @@ in
     homeDirectory = "/home/ca4mi";
     sessionVariables = {
       HERMES_HOME = lib.mkForce "/var/lib/hermes/.hermes";
-      PYTHONPATH = "${hermes-missing-modules}";
     };
   };
 
@@ -96,7 +89,7 @@ in
 
   # Hermes Desktop
   programs.hermes-agent = {
-    enable = true;
+    enable = false;
     desktop.enable = true;
   };
 
