@@ -13,7 +13,7 @@ let
   };
   hermes-missing-modules = pkgs.runCommand "hermes-missing-modules" {} ''
     mkdir -p $out
-    cp ${inputs.hermes-agent}/hermes_state_*.py $out/
+    cp -r ${inputs.hermes-agent}/hermes_state_* $out/
   '';
 in
 {
