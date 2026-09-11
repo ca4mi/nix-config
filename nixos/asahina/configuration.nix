@@ -79,7 +79,6 @@ in
     ];
   };
 
-
   hardware.nvidia = {
     modesetting.enable = true;
     powerManagement.enable = true;
@@ -129,7 +128,7 @@ in
   hardware.nvidia-container-toolkit.enable = true;
   services.xserver.videoDrivers = ["nvidia"];
 
-# Ollama with CUDA
+  # Ollama with CUDA
   services.ollama = {
     enable = true;
     package = pkgs.ollama-cuda;
@@ -213,7 +212,6 @@ in
       cinny-desktop
       pcsx2
       vicinae
-      inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.desktop
     ];
   };
 
