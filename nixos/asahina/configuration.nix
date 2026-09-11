@@ -11,11 +11,10 @@ let
     localSystem = { system = "x86_64-linux"; };
     config.allowUnfree = true;
   };
-#  hermesPython = pkgs.python313.withPackages (ps: [
-#    (ps.python-telegram-bot.overridePythonAttrs (old: {
-#      doCheck = false;
-#    }))
-#  ]);
+  hermes-missing-modules = pkgs.runCommand "hermes-missing-modules" {} ''
+    mkdir -p $out
+    cp ${inputs.hermes-agent}/hermes_state_*.py $out/
+  '';
 in
 {
   imports =
@@ -141,6 +140,7 @@ in
   };
 
   # Hermes Agent Configuration
+  # Desktop-app-only: serve backend for local + Tailscale-remote Hermes Desktop.
   services.hermes-agent = {
     enable = true;
     package = inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default;
@@ -149,23 +149,17 @@ in
     group = "users";
     createUser = false;
     settings = {
-      model.default = "mimo-v2.5-pro";
+      model.default = "mimo-v2.5";
       model.provider = "xiaomi";
-      model.base_url = "https://token-plan-sgp.xiaomimimo.com/v1";
 
       providers.xiaomi = {
         type = "openai-api";
-
-
-	base_url = "https://token-plan-sgp.xiaomimimo.com/v1";
+        base_url = "https://token-plan-sgp.xiaomimimo.com/v1";
       };
 
-      agent.disabled_toolsets = [ "vision" "image_gen" "computer_use" "web" ];
       tools.disabled_toolsets = [ "vision" "image_gen" "computer_use" "web" ];
     };
     environmentFiles = [
-      config.age.secrets.telegramBotToken.path
-      config.age.secrets.telegramAllowedChats.path
       config.age.secrets.xiaomiTokenPlanKey.path
     ];
     backend.mode = "serve";  # Hermes Desktop: provides /api/ws + /api/pty
@@ -173,16 +167,7 @@ in
     backend.port = 9119;
   };
 
-# Workaround for upstream missing modules in the hermes-agent flake
-  systemd.services.hermes-agent.environment.PYTHONPATH = let
-    hermes-missing-modules = pkgs.runCommand "hermes-missing-modules" {} ''
-      mkdir -p $out
-      cp ${inputs.hermes-agent}/hermes_state_*.py $out/
-    '';
-  in "${hermes-missing-modules}";
-
-#  systemd.services.hermes-agent.environment.PYTHONPATH =
-#    "${hermesPython}/lib/python3.13/site-packages";
+  systemd.services.hermes-agent.environment.PYTHONPATH = "${hermes-missing-modules}";
 
   hardware.uinput.enable = true;
   services.sunshine = {
@@ -228,6 +213,7 @@ in
       cinny-desktop
       pcsx2
       vicinae
+      inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.desktop
     ];
   };
 
@@ -276,3 +262,4 @@ in
   };
 
 }
+
