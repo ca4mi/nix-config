@@ -7,6 +7,13 @@
   pkgs,
   ...
 }:
+let
+  # Create the missing modules patch locally in home-manager
+  hermes-missing-modules = pkgs.runCommand "hermes-missing-modules" {} ''
+    mkdir -p $out
+    cp ${inputs.hermes-agent}/hermes_state_*.py $out/
+  '';
+in
 {
   imports = [
     ./git.nix
@@ -30,6 +37,18 @@
     kitty
     tmux
     gphoto2
+
+    # Wrapped Hermes Desktop with required environment variables
+    (pkgs.symlinkJoin {
+      name = "hermes-desktop-wrapped";
+      paths = [ inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.desktop ];
+      nativeBuildInputs = [ pkgs.makeWrapper ];
+      postBuild = ''
+        wrapProgram $out/bin/hermes-desktop \
+          --prefix PYTHONPATH : "${hermes-missing-modules}" \
+          --set HERMES_HOME "/var/lib/hermes/.hermes"
+      '';
+    })
   ];
 
   programs = {
@@ -87,10 +106,10 @@
 
   programs.home-manager.enable = true;
 
-  # Hermes Desktop
+  # Disabled default Hermes Desktop module to prevent duplicate/unwrapped installs
   programs.hermes-agent = {
     enable = false;
-    desktop.enable = true;
+    desktop.enable = false;
   };
 
   systemd.user.startServices = "sd-switch";
