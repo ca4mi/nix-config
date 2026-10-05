@@ -160,6 +160,8 @@ in
     };
     environmentFiles = [
       config.age.secrets.xiaomiTokenPlanKey.path
+      config.age.secrets.telegramBotToken.path
+      config.age.secrets.telegramAllowedChats.path
     ];
     backend.mode = "serve";  # Hermes Desktop: provides /api/ws + /api/pty
     backend.host = "0.0.0.0";  # reachable via Tailscale; LAN blocked by firewall
