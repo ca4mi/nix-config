@@ -162,6 +162,7 @@ in
       config.age.secrets.xiaomiTokenPlanKey.path
       config.age.secrets.telegramBotToken.path
       config.age.secrets.telegramAllowedChats.path
+      config.age.secrets.obsidianApiKeyEnv.path
     ];
     backend.mode = "serve";  # Hermes Desktop: provides /api/ws + /api/pty
     backend.host = "0.0.0.0";  # reachable via Tailscale; LAN blocked by firewall
@@ -169,6 +170,13 @@ in
   };
 
   systemd.services.hermes-agent.environment.PYTHONPATH = "${hermes-missing-modules}";
+
+  services.hermes-agent.mcpServers.obsidian = {
+    url = "http://127.0.0.1:27123/mcp";
+    headers.Authorization = "Bearer \${OBSIDIAN_API_KEY}";
+    timeout = 120;
+    connect_timeout = 15;
+  };
 
   hardware.uinput.enable = true;
   services.sunshine = {

@@ -42,6 +42,12 @@
        mode = "0400";
      };
 
+    obsidianApiKeyEnv = {
+      file = "${inputs.secrets}/obsidianApiKeyEnv.age";
+      owner = config.services.hermes-agent.user;   # "hermes" by default
+      mode = "0400";
+     };
+
     };
   };
 }
