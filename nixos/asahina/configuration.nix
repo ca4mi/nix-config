@@ -165,11 +165,24 @@ in
       config.age.secrets.obsidianApiKeyEnv.path
     ];
     backend.mode = "serve";  # Hermes Desktop: provides /api/ws + /api/pty
-    backend.host = "0.0.0.0";  # reachable via Tailscale; LAN blocked by firewall
+    backend.host = "127.0.0.1";
     backend.port = 9119;
   };
 
   systemd.services.hermes-agent.environment.PYTHONPATH = "${hermes-missing-modules}";
+
+  systemd.services.tailscale-serve-syncthing = {
+    description = "Expose Syncthing GUI via Tailscale serve";
+    after = [ "tailscaled.service" ];
+    requires = [ "tailscaled.service" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${pkgs.tailscale}/bin/tailscale serve --bg http://127.0.0.1:8384";
+      ExecStop = "${pkgs.tailscale}/bin/tailscale serve reset";
+    };
+  };
 
   services.hermes-agent.mcpServers.obsidian = {
     url = "http://127.0.0.1:27123/mcp";
@@ -259,7 +272,7 @@ in
     configDir = "/home/ca4mi/.local/state/syncthing";
     dataDir = "/home/ca4mi/.local/state/syncthing";
     openDefaultPorts = false;
-    guiAddress = "0.0.0.0:8384";
+    guiAddress = "127.0.0.1:8384";
 
     settings.options = {
       globalAnnounceEnabled = false;
