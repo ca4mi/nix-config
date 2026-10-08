@@ -282,4 +282,16 @@ in
     };
   };
 
+  systemd.services.syncthing-configure = {
+    description = "Configure Syncthing devices and folders from agenix secrets";
+    after = [ "syncthing.service" ];
+    requires = [ "syncthing.service" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "/home/ca4mi/.local/bin/syncthing-configure.sh";
+    };
+  };
+
 }
