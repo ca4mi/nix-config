@@ -291,6 +291,10 @@ in
       Type = "oneshot";
       RemainAfterExit = true;
       ExecStart = "/home/ca4mi/.local/bin/syncthing-configure.sh";
+      Environment = [
+        "KYON_DEVICE_ID_PATH=${config.age.secrets.syncthingKyonDeviceID.path}"
+        "KYON_ADDRESS_PATH=${config.age.secrets.syncthingKyonAddress.path}"
+      ];
     };
   };
 
