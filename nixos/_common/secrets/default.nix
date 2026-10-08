@@ -49,6 +49,18 @@
       mode = "0400";
      };
 
+    syncthingKyonDeviceID = {
+      file = "${inputs.secrets}/syncthingKyonDeviceID.age";
+      owner = "ca4mi";
+      mode = "0400";
+    };
+
+    syncthingKyonAddress = {
+      file = "${inputs.secrets}/syncthingKyonAddress.age";
+      owner = "ca4mi";
+      mode = "0400";
+    };
+
     };
   };
 }
