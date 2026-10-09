@@ -196,7 +196,26 @@ in
     enable = true;
     autoStart = true;
     capSysAdmin = true;
-    openFirewall = false;  # Tailscale-only
+    openFirewall = false;
+  };
+
+  systemd.services.sunshine-configure = {
+    description = "Configure Sunshine bind address from agenix secret";
+    before = [ "sunshine.service" ];
+    wantedBy = [ "sunshine.service" ];
+    path = [ pkgs.coreutils ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      User = "ca4mi";
+      Group = "users";
+      ExecStart = "${pkgs.writeShellScript "sunshine-configure" ''
+        ADDR=$(cat ${config.age.secrets.sunshineBindAddress.path})
+        CONF="/home/ca4mi/.config/sunshine/sunshine.conf"
+        echo "bind_address = $ADDR" > "$CONF"
+        echo "origin_web_ui_allowed = pc" >> "$CONF"
+      ''}";
+    };
   };
 
   # usb 'users' group access to USB device for VM
