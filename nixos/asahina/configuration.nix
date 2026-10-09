@@ -176,9 +176,20 @@ in
     after = [ "tailscaled.service" ];
     requires = [ "tailscaled.service" ];
     wantedBy = [ "multi-user.target" ];
+    path = [ pkgs.tailscale pkgs.coreutils ];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
+      ExecStartPre = "${pkgs.writeShellScript "wait-tailscale" ''
+        for i in $(seq 1 30); do
+          if tailscale status >/dev/null 2>&1; then
+            exit 0
+          fi
+          sleep 1
+        done
+        echo "Tailscale not ready after 30s" >&2
+        exit 1
+      ''}";
       ExecStart = "${pkgs.tailscale}/bin/tailscale serve --bg http://127.0.0.1:8384";
       ExecStop = "${pkgs.tailscale}/bin/tailscale serve reset";
     };
@@ -202,7 +213,8 @@ in
   systemd.services.sunshine-configure = {
     description = "Configure Sunshine bind address from agenix secret";
     before = [ "sunshine.service" ];
-    wantedBy = [ "sunshine.service" ];
+    requires = [ "sunshine.service" ];
+    wantedBy = [ "multi-user.target" ];
     path = [ pkgs.coreutils ];
     serviceConfig = {
       Type = "oneshot";
