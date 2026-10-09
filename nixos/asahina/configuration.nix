@@ -212,8 +212,6 @@ in
 
   systemd.services.sunshine-configure = {
     description = "Configure Sunshine bind address from agenix secret";
-    before = [ "sunshine.service" ];
-    requires = [ "sunshine.service" ];
     wantedBy = [ "multi-user.target" ];
     path = [ pkgs.coreutils ];
     serviceConfig = {
@@ -226,6 +224,7 @@ in
         CONF="/home/ca4mi/.config/sunshine/sunshine.conf"
         echo "bind_address = $ADDR" > "$CONF"
         echo "origin_web_ui_allowed = pc" >> "$CONF"
+        echo "csrf_allowed_origins = https://$ADDR:47990, https://asahina:47990, https://localhost:47990" >> "$CONF"
       ''}";
     };
   };
