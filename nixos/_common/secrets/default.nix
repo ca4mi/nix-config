@@ -61,6 +61,12 @@
       mode = "0400";
     };
 
+    sunshineBindAddress = {
+      file = "${inputs.secrets}/sunshineBindAddress.age";
+      owner = "ca4mi";
+      mode = "0400";
+    };
+
     };
   };
 }
