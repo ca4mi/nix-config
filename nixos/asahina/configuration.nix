@@ -287,9 +287,22 @@ in
     after = [ "syncthing.service" ];
     requires = [ "syncthing.service" ];
     wantedBy = [ "multi-user.target" ];
+    path = [ pkgs.curl pkgs.jq pkgs.gnugrep pkgs.gnused pkgs.coreutils ];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
+      User = "ca4mi";
+      Group = "users";
+      ExecStartPre = "${pkgs.writeShellScript "wait-syncthing" ''
+        for i in $(seq 1 30); do
+          if curl -fsS http://127.0.0.1:8384/rest/noauth/health >/dev/null 2>&1; then
+            exit 0
+          fi
+          sleep 1
+        done
+        echo "Syncthing not ready after 30s" >&2
+        exit 1
+      ''}";
       ExecStart = "/home/ca4mi/.local/bin/syncthing-configure.sh";
       Environment = [
         "KYON_DEVICE_ID_PATH=${config.age.secrets.syncthingKyonDeviceID.path}"
