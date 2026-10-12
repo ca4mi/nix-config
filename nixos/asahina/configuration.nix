@@ -148,7 +148,7 @@ in
     group = "users";
     createUser = false;
     settings = {
-      model.default = "mimo-v2.5";
+      model.default = "mimo-v2.6-flash";
       model.provider = "xiaomi";
 
       providers.xiaomi = {
