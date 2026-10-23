@@ -38,6 +38,9 @@ in
     tmux
     gphoto2
 
+    # Antigravity CLI (`agy`)
+    inputs.antigravity-nix.packages.${pkgs.stdenv.hostPlatform.system}.google-antigravity-cli
+
     # Wrapped Hermes Desktop with required environment variables
     (pkgs.symlinkJoin {
       name = "hermes-desktop-wrapped";
