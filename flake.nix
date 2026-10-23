@@ -26,6 +26,12 @@
     hermes-agent = {
       url = "github:NousResearch/hermes-agent";
     };
+
+    antigravity-nix = {
+      url = "github:jacopone/antigravity-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs = {
