@@ -20,6 +20,27 @@
         "type": "github"
       }
     },
+    "antigravity-nix": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1792740160,
+        "narHash": "sha256-FV6YuHJv1WvBdsVyl0/OYjZsWA5Rm3DJrWw68W8Tc90=",
+        "owner": "jacopone",
+        "repo": "antigravity-nix",
+        "rev": "e5ea9d2c95d00f2ec30f22c9df8008f9fa3ec22d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jacopone",
+        "repo": "antigravity-nix",
+        "type": "github"
+      }
+    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -61,6 +82,24 @@
         "type": "github"
       }
     },
+    "flake-utils": {
+      "inputs": {
+        "systems": "systems"
+      },
+      "locked": {
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "hermes-agent": {
       "inputs": {
         "flake-parts": "flake-parts",
@@ -72,11 +111,11 @@
         "uv2nix": "uv2nix"
       },
       "locked": {
-        "lastModified": 1792733630,
-        "narHash": "sha256-1GyCuL2PKAri+GewdhuZmPrnNearyyOxz/QM88G0pqs=",
+        "lastModified": 1792736699,
+        "narHash": "sha256-8qbzrXuzIabcRnS57XH0KkWjMmSG3LkeCdhDDVc8D7M=",
         "owner": "NousResearch",
         "repo": "hermes-agent",
-        "rev": "fab9b01c915a3118cc8daa6cc1b18c15b3f982d0",
+        "rev": "67491b50f7e5ef8be6e591d745b32758aa60c33e",
         "type": "github"
       },
       "original": {
@@ -249,6 +288,7 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
+        "antigravity-nix": "antigravity-nix",
         "disko": "disko",
         "hermes-agent": "hermes-agent",
         "home-manager": "home-manager_2",
@@ -271,6 +311,21 @@
       "original": {
         "type": "git",
         "url": "ssh://git@github.com/ca4mi/secrets.git"
+      }
+    },
+    "systems": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
       }
     },
     "uv2nix": {
