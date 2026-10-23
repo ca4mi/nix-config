@@ -25,6 +25,7 @@ in
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.hostName = "asahina";
   networking.hostId = "8425e349"; 
