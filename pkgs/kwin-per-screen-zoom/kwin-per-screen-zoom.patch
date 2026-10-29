@@ -1,0 +1,43 @@
+--- a/src/plugins/zoom/zoom.cpp
++++ b/src/plugins/zoom/zoom.cpp
+@@ -245,7 +245,12 @@
+ 
+ void ZoomEffect::prePaintScreen(ScreenPrePaintData &data, std::chrono::milliseconds presentTime)
+ {
+-    data.mask |= PAINT_SCREEN_TRANSFORMED;
++    // Per-screen magnification: only the screen with the mouse pointer gets
++    // the zoom transform; other screens are painted as usual.
++    LogicalOutput *pointerScreen = effects->screenAt(Cursors::self()->mouse()->pos().toPoint());
++    if (!data.screen || data.screen == pointerScreen) {
++        data.mask |= PAINT_SCREEN_TRANSFORMED;
++    }
+     if (m_zoom != m_targetZoom) {
+         int time = 0;
+         if (m_lastPresentTime.count()) {
+@@ -403,6 +408,14 @@
+ 
+ void ZoomEffect::paintScreen(const RenderTarget &renderTarget, const RenderViewport &viewport, int mask, const Region &deviceRegion, LogicalOutput *screen)
+ {
++    // Per-screen magnification: only the screen with the mouse pointer is
++    // magnified; every other screen is painted normally.
++    LogicalOutput *pointerScreen = effects->screenAt(Cursors::self()->mouse()->pos().toPoint());
++    if (screen && pointerScreen && screen != pointerScreen) {
++        effects->paintScreen(renderTarget, viewport, mask, deviceRegion, screen);
++        return;
++    }
++
+     OffscreenData *offscreenData = ensureOffscreenData(renderTarget, viewport, screen);
+     if (!offscreenData) {
+         return;
+@@ -423,7 +436,10 @@
+ 
+     GLShader *shader = shaderForZoom(m_zoom);
+     ShaderManager::instance()->pushShader(shader);
+-    for (auto &[screen, offscreen] : m_offscreenData) {
++    for (auto &[output, offscreen] : m_offscreenData) {
++        if (output != screen) {
++            continue;
++        }
+         QMatrix4x4 matrix;
+         matrix.translate(m_xTranslation * scale, m_yTranslation * scale);
+         matrix.scale(m_zoom, m_zoom);
