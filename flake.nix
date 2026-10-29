@@ -60,6 +60,7 @@
           {
             nixpkgs.overlays = [
               (import ./pkgs/keyboard-layouts)
+              (import ./pkgs/kwin-per-screen-zoom)
             ];
           }
         ];
