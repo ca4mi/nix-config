@@ -267,7 +267,6 @@ in
       cinny-desktop
       pcsx2
       vicinae
-      opencode-desktop
     ];
   };
 
