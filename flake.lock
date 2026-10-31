@@ -130,11 +130,11 @@
     "nix-office": {
       "flake": false,
       "locked": {
-        "lastModified": 1793419673,
-        "narHash": "sha256-5qhYYjwB3EKkjqqU19+MYHzJASnPp5fyYq7gMDXgNXY=",
+        "lastModified": 1793422154,
+        "narHash": "sha256-ngklUV/50Ow+uu5I2bNA70pmjIoV8e/LV4PemNXTDSU=",
         "ref": "refs/heads/main",
-        "rev": "fa34e29b26cf578a7dc22b82fd7c03a94eb0a678",
-        "revCount": 7,
+        "rev": "e8152c7fffb0a210c239489c7375e839bb859999",
+        "revCount": 8,
         "type": "git",
         "url": "ssh://git@github.com/ca4mi/nix-office.git"
       },
