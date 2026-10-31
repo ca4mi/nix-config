@@ -57,6 +57,7 @@
           ./nixos/_common
           inputs.agenix.nixosModules.default
           inputs.hermes-agent.nixosModules.default
+          "${inputs.nix-office}/nixos/default.nix"
           {
             nixpkgs.overlays = [
               (import ./pkgs/keyboard-layouts)
