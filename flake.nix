@@ -23,6 +23,11 @@
       flake = false;
     };
 
+    nix-office = {
+      url = "git+ssh://git@github.com/ca4mi/nix-office.git";
+      flake = false;
+    };
+
     hermes-agent = {
       url = "github:NousResearch/hermes-agent";
     };
@@ -71,6 +76,7 @@
           inputs.agenix.homeManagerModules.default
           inputs.hermes-agent.homeManagerModules.default
           ./users/ca4mi/home.nix
+          "${inputs.nix-office}/home.nix"
         ];
       };
     };

@@ -127,6 +127,22 @@
         "type": "github"
       }
     },
+    "nix-office": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1793416233,
+        "narHash": "sha256-INENoGxLJq2LEsRW0N+SRElyRcYl7eRxvup0Ig1mY9M=",
+        "ref": "refs/heads/main",
+        "rev": "46c74859aba5d084a42cabe0349449c089a2f8bd",
+        "revCount": 3,
+        "type": "git",
+        "url": "ssh://git@github.com/ca4mi/nix-office.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/ca4mi/nix-office.git"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1792502884,
@@ -252,6 +268,7 @@
         "disko": "disko",
         "hermes-agent": "hermes-agent",
         "home-manager": "home-manager_2",
+        "nix-office": "nix-office",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "secrets": "secrets"
@@ -260,11 +277,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1791537355,
-        "narHash": "sha256-uPUDwwhe3Og10aIACdx1LYmQEewd5Vz3rddA9zUEePU=",
+        "lastModified": 1793417425,
+        "narHash": "sha256-K6EY3rlGoGu3pEju/FMklWf8Fbpd5wlDCgohuHeNwGY=",
         "ref": "refs/heads/main",
-        "rev": "ab92c39a4f8ad01eb2a9312b39c9c093b155803d",
-        "revCount": 51,
+        "rev": "cfeed1b4c38b6cff766aa8f6d5ee1f07c5bf1b86",
+        "revCount": 52,
         "type": "git",
         "url": "ssh://git@github.com/ca4mi/secrets.git"
       },
