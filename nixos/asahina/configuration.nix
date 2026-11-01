@@ -280,6 +280,8 @@ in
     enableSSHSupport = true;
   };
 
+  programs.nix-ld.enable = true;
+
   # bluetooth
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
