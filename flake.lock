@@ -207,11 +207,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1789006805,
-        "narHash": "sha256-xB8mKMOx1IA9vTDNLmJZ6n4wCMq/cuWBBOzGCRnqxrU=",
-        "owner": "nixos",
+        "lastModified": 1793821670,
+        "narHash": "sha256-WlsILJeLh/YHQ3MtcxfELtD1k05WK9us508L76RlegE=",
+        "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "8ce4ef6cb6f871616146b9fe26d2a5ae594e94fe",
+        "rev": "c399e1b7fb90789e3e032784ef8ad98ba9907169",
         "type": "github"
       },
       "original": {
@@ -223,11 +223,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1789009968,
-        "narHash": "sha256-GB16oaxpsrnGNnGIE+0uYBqMRzB9X6FYDUvjvnJAYew=",
+        "lastModified": 1793865203,
+        "narHash": "sha256-/cpdPHaySDIyCgZI6EWngiM6jK3YLUNzv1b7lTzy6Bk=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "d58a46e3bc02d91ebe04667f8397752a749c0024",
+        "rev": "c56a87d8e41ce69bd2af57eb35dcc117a9dfca33",
         "type": "github"
       },
       "original": {
@@ -323,11 +323,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1784362590,
-        "narHash": "sha256-FnwTSpEVoiMlzgzbXY3cp9uHFJOAmJNtIVA9kzs0DLc=",
+        "lastModified": 1793417425,
+        "narHash": "sha256-K6EY3rlGoGu3pEju/FMklWf8Fbpd5wlDCgohuHeNwGY=",
         "ref": "refs/heads/main",
-        "rev": "f802acf65016d5b1f31cb4b612913b7dfcb14157",
-        "revCount": 42,
+        "rev": "cfeed1b4c38b6cff766aa8f6d5ee1f07c5bf1b86",
+        "revCount": 52,
         "type": "git",
         "url": "ssh://git@github.com/ca4mi/secrets.git"
       },
