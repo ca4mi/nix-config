@@ -173,6 +173,22 @@
         "type": "github"
       }
     },
+    "nix-office": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1793693421,
+        "narHash": "sha256-bb6DLOMDuklHJYRKXddCa7fPMz6bip3nNCJqcCkCDw4=",
+        "ref": "refs/heads/main",
+        "rev": "b819fc5255e57714a5cb491341f0025752cff93d",
+        "revCount": 19,
+        "type": "git",
+        "url": "ssh://git@github.com/ca4mi/nix-office.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/ca4mi/nix-office.git"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1785318670,
@@ -298,6 +314,7 @@
         "disko": "disko",
         "hermes-agent": "hermes-agent",
         "home-manager": "home-manager_3",
+        "nix-office": "nix-office",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "secrets": "secrets"
