@@ -77,7 +77,7 @@ in
     enable = true;
     enable32Bit = true;
     extraPackages = with pkgs; [
-      rocmPackages.clr
+      # rocmPackages.clr
     ];
   };
 
@@ -123,7 +123,7 @@ in
   services.gvfs.enable = true;
 
   environment.systemPackages = with pkgs; [
-    cudatoolkit
+    # cudatoolkit
     nvtopPackages.nvidia
   ];
 
@@ -133,11 +133,8 @@ in
   # Ollama with CUDA
   services.ollama = {
     enable = true;
-    package = pkgs.ollama-cuda;
-    # loadModels = ["justingtzk/gemma-4-26B-A4B-it-qat-GGUF:UD-Q4_K_XL_128K"];
-    environmentVariables = {
-      OLLAMA_NUM_CTX = "8192";
-    };
+    package = pkgs-unstable.ollama-cuda;
+    environmentVariables.OLLAMA_NUM_CTX = "8192";
   };
 
   # Hermes Agent Configuration
