@@ -148,12 +148,9 @@ in
     createUser = false;
     settings = {
       model.default = "mimo-v2.6-flash";
-      model.provider = "xiaomi";
-
-      providers.xiaomi = {
-        type = "openai-api";
-        base_url = "https://token-plan-sgp.xiaomimimo.com/v1";
-      };
+      model.provider = "custom";
+      model.base_url = "https://token-plan-sgp.xiaomimimo.com/v1";
+      model.key_env = "XIAOMI_API_KEY";
 
       tools.disabled_toolsets = [ "vision" "image_gen" "computer_use" "web" ];
     };
