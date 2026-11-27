@@ -25,18 +25,6 @@
        mode  = "0400";
        };
 
-     anthropicApiKey = {
-       file = "${inputs.secrets}/anthropicApiKey.age";
-       owner = "ca4mi";
-       mode = "0400";
-     };
-
-     xiaomiApiKey = {
-       file = "${inputs.secrets}/xiaomiApiKey.age";
-       owner = "ca4mi";
-       mode = "0400";
-     };
-
      xiaomiTokenPlanKey = {
        file = "${inputs.secrets}/xiaomiTokenPlanKey.age";
        owner = "ca4mi";
