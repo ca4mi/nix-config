@@ -137,6 +137,10 @@ in
     environmentVariables.OLLAMA_NUM_CTX = "8192";
   };
 
+  systemd.tmpfiles.rules = lib.mkBefore [
+    "d /var/lib/hermes/.hermes 0750 ca4mi users - -"
+  ];
+
   # Hermes Agent Configuration
   # Desktop-app-only: serve backend for local + Tailscale-remote Hermes Desktop.
   services.hermes-agent = {
