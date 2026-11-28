@@ -11,10 +11,6 @@ let
     localSystem = { system = "x86_64-linux"; };
     config.allowUnfree = true;
   };
-  hermes-missing-modules = pkgs.runCommand "hermes-missing-modules" {} ''
-    mkdir -p $out
-    cp -r ${inputs.hermes-agent}/hermes_state_* $out/
-  '';
 in
 {
   imports =
@@ -137,69 +133,23 @@ in
     environmentVariables.OLLAMA_NUM_CTX = "8192";
   };
 
-  systemd.tmpfiles.rules = lib.mkBefore [
-    "d /var/lib/hermes/.hermes 0750 ca4mi users - -"
-  ];
-
-  # Hermes Agent Configuration
-  # Desktop-app-only: serve backend for local + Tailscale-remote Hermes Desktop.
-  services.hermes-agent = {
-    enable = true;
-    package = inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default;
-    addToSystemPackages = true;
-    user = "ca4mi";
-    group = "users";
-    createUser = false;
-    settings = {
-      model.default = "mimo-v2.6-flash";
-      model.provider = "custom";
-      model.base_url = "https://token-plan-sgp.xiaomimimo.com/v1";
-      model.key_env = "XIAOMI_API_KEY";
-
-      tools.disabled_toolsets = [ "vision" "image_gen" "computer_use" "web" ];
-    };
-    environmentFiles = [
-      config.age.secrets.xiaomiTokenPlanKey.path
-      config.age.secrets.telegramBotToken.path
-      config.age.secrets.telegramAllowedChats.path
-      config.age.secrets.obsidianApiKeyEnv.path
-    ];
-    backend.mode = "serve";  # Hermes Desktop: provides /api/ws + /api/pty
-    backend.host = "127.0.0.1";
-    backend.port = 9119;
-  };
-
-  systemd.services.hermes-agent.environment.PYTHONPATH = "${hermes-missing-modules}";
-
-  systemd.services.tailscale-serve-syncthing = {
-    description = "Expose Syncthing GUI via Tailscale serve";
+  systemd.services.tailscale-serve-dashboards = {
+    description = "Tailscale serve: dashboards";
     after = [ "tailscaled.service" ];
     requires = [ "tailscaled.service" ];
     wantedBy = [ "multi-user.target" ];
-    path = [ pkgs.tailscale pkgs.coreutils ];
+    path = [ pkgs.tailscale ];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
-      ExecStartPre = "${pkgs.writeShellScript "wait-tailscale" ''
-        for i in $(seq 1 30); do
-          if tailscale status >/dev/null 2>&1; then
-            exit 0
-          fi
-          sleep 1
-        done
-        echo "Tailscale not ready after 30s" >&2
-        exit 1
+      ExecStart = "${pkgs.writeShellScript "tailscale-serve" ''
+        ${pkgs.tailscale}/bin/tailscale serve reset || true
+        sleep 1
+        ${pkgs.tailscale}/bin/tailscale serve --bg 8700
       ''}";
-      ExecStart = "${pkgs.tailscale}/bin/tailscale serve --bg http://127.0.0.1:8384";
       ExecStop = "${pkgs.tailscale}/bin/tailscale serve reset";
     };
   };
-
-  services.hermes-agent.mcpServers.obsidian = {
-    url = "http://127.0.0.1:27123/mcp";
-    headers.Authorization = "Bearer \${OBSIDIAN_API_KEY}";
-    timeout = 120;
-    connect_timeout = 15;
   };
 
   hardware.uinput.enable = true;
@@ -261,7 +211,6 @@ in
       mediainfo
       handbrake
       libreoffice
-      syncthing
       cinny-desktop
       pcsx2
       vicinae
@@ -297,50 +246,8 @@ in
   networking.firewall.allowedTCPPorts = lib.mkForce [];
   networking.firewall.allowPing = false;
 
-  services.syncthing = {
-    enable = true;
-    user = "ca4mi";
-    group = "users";
-    configDir = "/home/ca4mi/.local/state/syncthing";
-    dataDir = "/home/ca4mi/.local/state/syncthing";
-    openDefaultPorts = false;
-    guiAddress = "127.0.0.1:8384";
+  
 
-    settings.options = {
-      globalAnnounceEnabled = false;
-      relaysEnabled = false;
-      natTraversalEnabled = false;
-      localAnnounceEnabled = false;
-    };
-  };
-
-  systemd.services.syncthing-configure = {
-    description = "Configure Syncthing devices and folders from agenix secrets";
-    after = [ "syncthing.service" ];
-    requires = [ "syncthing.service" ];
-    wantedBy = [ "multi-user.target" ];
-    path = [ pkgs.curl pkgs.jq pkgs.gnugrep pkgs.gnused pkgs.coreutils ];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      User = "ca4mi";
-      Group = "users";
-      ExecStartPre = "${pkgs.writeShellScript "wait-syncthing" ''
-        for i in $(seq 1 30); do
-          if curl -fsS http://127.0.0.1:8384/rest/noauth/health >/dev/null 2>&1; then
-            exit 0
-          fi
-          sleep 1
-        done
-        echo "Syncthing not ready after 30s" >&2
-        exit 1
-      ''}";
-      ExecStart = "/home/ca4mi/.local/bin/syncthing-configure.sh";
-      Environment = [
-        "KYON_DEVICE_ID_PATH=${config.age.secrets.syncthingKyonDeviceID.path}"
-        "KYON_ADDRESS_PATH=${config.age.secrets.syncthingKyonAddress.path}"
-      ];
-    };
-  };
+  
 
 }

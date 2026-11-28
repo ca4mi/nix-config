@@ -7,13 +7,6 @@
   pkgs,
   ...
 }:
-let
-  # Create the missing modules patch locally in home-manager
-  hermes-missing-modules = pkgs.runCommand "hermes-missing-modules" {} ''
-    mkdir -p $out
-    cp -r ${inputs.hermes-agent}/hermes_state_* $out/
-  '';
-in
 {
   imports = [
     ./git.nix
@@ -27,9 +20,6 @@ in
   home = {
     username = "ca4mi";
     homeDirectory = "/home/ca4mi";
-    sessionVariables = {
-      HERMES_HOME = lib.mkForce "/var/lib/hermes/.hermes";
-    };
   };
 
   home.packages = with pkgs; [
@@ -37,19 +27,13 @@ in
     kitty
     tmux
     gphoto2
-
-    # Wrapped Hermes Desktop with required environment variables
-    (pkgs.symlinkJoin {
-      name = "hermes-desktop-wrapped";
-      paths = [ inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.desktop ];
-      nativeBuildInputs = [ pkgs.makeWrapper ];
-      postBuild = ''
-        wrapProgram $out/bin/hermes-desktop \
-          --prefix PYTHONPATH : "${hermes-missing-modules}" \
-          --set HERMES_HOME "/var/lib/hermes/.hermes"
-      '';
-    })
+    nodejs-22_x
   ];
+
+  # Pi coding agent: public config + private overlay
+  home.file.".pi/agent".source = ./pi;
+  home.file.".pi/agent/models.json".source = "${inputs.pi-config}/models.json";
+  home.file.".pi/agent/mcp.json".source = "${inputs.pi-config}/mcp.json";
 
   programs = {
     direnv = {
@@ -105,12 +89,6 @@ in
   };
 
   programs.home-manager.enable = true;
-
-  # Disabled default Hermes Desktop module to prevent duplicate/unwrapped installs
-  programs.hermes-agent = {
-    enable = false;
-    desktop.enable = false;
-  };
 
   systemd.user.startServices = "sd-switch";
   home.stateVersion = "24.05";

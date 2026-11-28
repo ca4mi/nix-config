@@ -33,21 +33,9 @@
 
     obsidianApiKeyEnv = {
       file = "${inputs.secrets}/obsidianApiKeyEnv.age";
-      owner = config.services.hermes-agent.user;   # "hermes" by default
+      owner = "ca4mi";
       mode = "0400";
      };
-
-    syncthingKyonDeviceID = {
-      file = "${inputs.secrets}/syncthingKyonDeviceID.age";
-      owner = "ca4mi";
-      mode = "0400";
-    };
-
-    syncthingKyonAddress = {
-      file = "${inputs.secrets}/syncthingKyonAddress.age";
-      owner = "ca4mi";
-      mode = "0400";
-    };
 
     sunshineBindAddress = {
       file = "${inputs.secrets}/sunshineBindAddress.age";

@@ -28,8 +28,9 @@
       flake = false;
     };
 
-    hermes-agent = {
-      url = "github:NousResearch/hermes-agent";
+    pi-config = {
+      url = "git+ssh://git@github.com/ca4mi/pi-config.git";
+      flake = false;
     };
 
   };
@@ -56,7 +57,6 @@
           ./nixos/asahina/configuration.nix
           ./nixos/_common
           inputs.agenix.nixosModules.default
-          inputs.hermes-agent.nixosModules.default
           "${inputs.nix-office}/nixos/default.nix"
           {
             nixpkgs.overlays = [
@@ -75,7 +75,6 @@
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [
           inputs.agenix.homeManagerModules.default
-          inputs.hermes-agent.homeManagerModules.default
           ./users/ca4mi/home.nix
           "${inputs.nix-office}/home.nix"
         ];
