@@ -150,7 +150,6 @@ in
       ExecStop = "${pkgs.tailscale}/bin/tailscale serve reset";
     };
   };
-  };
 
   hardware.uinput.enable = true;
   services.sunshine = {
