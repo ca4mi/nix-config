@@ -27,7 +27,7 @@
     kitty
     tmux
     gphoto2
-    nodejs-22_x
+    nodejs_22
   ];
 
   # Pi coding agent
