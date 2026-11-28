@@ -30,10 +30,9 @@
     nodejs-22_x
   ];
 
-  # Pi coding agent: public config + private overlay
-  home.file.".pi/agent".source = ./pi;
-  home.file.".pi/agent/models.json".source = "${inputs.pi-config}/models.json";
-  home.file.".pi/agent/mcp.json".source = "${inputs.pi-config}/mcp.json";
+  # Pi coding agent
+  home.file.".pi/agent".source = "${inputs.pi-config}";
+  home.file.".pi/agent".recursive = true;
 
   programs = {
     direnv = {
