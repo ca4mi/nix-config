@@ -109,22 +109,6 @@
         "type": "github"
       }
     },
-    "pi-config": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1795871626,
-        "narHash": "sha256-4zh8Bqtk4zQW3jToMdmojEkTz5bTfhJx8SM7wH02M1o=",
-        "ref": "refs/heads/master",
-        "rev": "3b7501ad47046aea9a80e62b6dd20861ed243655",
-        "revCount": 2,
-        "type": "git",
-        "url": "ssh://git@github.com/ca4mi/pi-config.git"
-      },
-      "original": {
-        "type": "git",
-        "url": "ssh://git@github.com/ca4mi/pi-config.git"
-      }
-    },
     "root": {
       "inputs": {
         "agenix": "agenix",
@@ -133,7 +117,6 @@
         "nix-office": "nix-office",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",
-        "pi-config": "pi-config",
         "secrets": "secrets"
       }
     },

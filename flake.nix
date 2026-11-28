@@ -28,11 +28,6 @@
       flake = false;
     };
 
-    pi-config = {
-      url = "git+ssh://git@github.com/ca4mi/pi-config.git";
-      flake = false;
-    };
-
   };
 
   outputs = {

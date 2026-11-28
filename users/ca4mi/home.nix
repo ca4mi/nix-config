@@ -27,12 +27,24 @@
     kitty
     tmux
     gphoto2
-    nodejs_22
+    pi-coding-agent   # from nixpkgs: pinned by flake.lock, telemetry/version-check off by default
   ];
 
-  # Pi coding agent
-  home.file.".pi/agent".source = "${inputs.pi-config}";
-  home.file.".pi/agent".recursive = true;
+  # Pi coding agent: link ONLY static files from a local checkout of pi-config.
+  #  - mkOutOfStoreSymlink => nothing is copied into /nix/store (which is
+  #    world-readable), and edits apply immediately, no flake update needed.
+  #  - Pi owns auth.json, settings.json, models-store.json and sessions/, so those
+  #    are deliberately NOT linked.
+  #  - mcp.json is not linked: Pi has no built-in MCP support (needs an extension).
+  #  - Keep API keys out of these files: use "apiKey": "ENV_VAR_NAME" or
+  #    "!command" in models.json.
+  # Requires: git clone git@github.com:ca4mi/pi-config.git ~/Git/pi-config
+  home.file.".pi/agent/models.json".source =
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Git/pi-config/models.json";
+  home.file.".pi/agent/AGENTS.md".source =
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Git/pi-config/AGENTS.md";
+  home.file.".pi/agent/skills".source =
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Git/pi-config/skills";
 
   programs = {
     direnv = {
